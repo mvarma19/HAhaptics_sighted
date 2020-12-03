@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/gradient_3"
+    android:background="#85DCB0"
     tools:context=".HALoginTouch">
 
 
@@ -174,7 +174,7 @@
         android:id="@+id/tvb"
         android:layout_width="240dp"
         android:layout_height="170dp"
-        android:background="@drawable/gradient_1"
+        android:background="#41B3A3"
         android:fontFamily="@font/oswald"
         android:gravity="center_horizontal|center_vertical"
         android:text="Tap to enter PIN"
@@ -185,39 +185,39 @@
         app:layout_constraintHorizontal_bias="0.562"
         app:layout_constraintStart_toStartOf="@+id/guideline21"
         app:layout_constraintTop_toTopOf="@+id/guideline17"
-        app:layout_constraintVertical_bias="0.573" />
+        app:layout_constraintVertical_bias="0.262" />
 
     <TextView
         android:id="@+id/del"
         android:layout_width="142dp"
         android:layout_height="40dp"
-        android:background="#960000"
+        android:background="@drawable/gradient_2"
         android:fontFamily="@font/oswald"
         android:gravity="center_horizontal|center_vertical"
         android:text="DELETE"
         android:textSize="20dp"
         app:layout_constraintBottom_toTopOf="@+id/guideline19"
         app:layout_constraintEnd_toStartOf="@+id/guideline11"
-        app:layout_constraintHorizontal_bias="0.913"
+        app:layout_constraintHorizontal_bias="0.87"
         app:layout_constraintStart_toStartOf="@+id/guideline10"
         app:layout_constraintTop_toTopOf="@+id/guideline18"
-        app:layout_constraintVertical_bias="0.785" />
+        app:layout_constraintVertical_bias="1.0" />
 
     <TextView
         android:id="@+id/clr"
         android:layout_width="140dp"
         android:layout_height="40dp"
-        android:background="#960000"
+        android:background="@drawable/gradient_2"
         android:fontFamily="@font/oswald"
         android:gravity="center_horizontal|center_vertical"
         android:text="CLEAR"
         android:textSize="20dp"
         app:layout_constraintBottom_toTopOf="@+id/guideline19"
         app:layout_constraintEnd_toStartOf="@+id/guideline4"
-        app:layout_constraintHorizontal_bias="0.934"
+        app:layout_constraintHorizontal_bias="0.869"
         app:layout_constraintStart_toStartOf="@+id/guideline21"
         app:layout_constraintTop_toTopOf="@+id/guideline18"
-        app:layout_constraintVertical_bias="0.785" />
+        app:layout_constraintVertical_bias="1.0" />
 
     <TextView
         android:id="@+id/input"
@@ -225,12 +225,13 @@
         android:layout_height="59dp"
         android:backgroundTint="#000000"
         android:textSize="25sp"
+
         app:layout_constraintBottom_toTopOf="@+id/continue_button"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline19"
-        app:layout_constraintVertical_bias="0.218" />
+        app:layout_constraintTop_toBottomOf="@+id/vibration_durationseekbar"
+        app:layout_constraintVertical_bias="0.087" />
 
     <SeekBar
         android:id="@+id/vibration_intervalseekbar"
@@ -267,6 +268,7 @@
         android:layout_alignParentLeft="true"
         android:layout_centerInParent="true"
         android:layout_marginTop="104dp"
+        android:text="Vibration Duration:0/100"
 
         android:fontFamily="@font/oswald"
         android:textAlignment="center"
@@ -285,7 +287,9 @@
         android:layout_marginTop="4dp"
         android:fontFamily="@font/oswald"
         android:textAlignment="center"
+
         android:textSize="20dp"
+        android:text="Vibration Interval:0/100"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="MissingConstraints"
         tools:layout_editor_absoluteX="8dp" />
@@ -294,7 +298,7 @@
         android:id="@+id/continue_button"
         android:layout_width="193dp"
         android:layout_height="74dp"
-        android:background="#960000"
+        android:background="@drawable/gradient_2"
         android:fontFamily="@font/oswald"
         android:text="Continue"
         android:textSize="30dp"

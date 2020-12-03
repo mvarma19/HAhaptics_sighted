@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/pink"
+    android:background="@drawable/gradient_3"
     tools:context=".HAMainScreen">
 
 
@@ -146,11 +146,11 @@
         android:layout_height="55dp"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:background="@color/purple"
+        android:background="@drawable/gradient_2"
         android:fontFamily="@font/oswald"
 
 
-        android:text="Perform Dairy Studies "
+        android:text="Perform ESM Studies "
         android:textSize="24dp"
         app:layout_constraintBottom_toTopOf="@+id/buttonMainLoginScreen2"
         app:layout_constraintEnd_toEndOf="parent"
@@ -176,7 +176,7 @@
         android:layout_height="55dp"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:background="@color/purple"
+        android:background="@drawable/gradient_2"
         android:fontFamily="@font/oswald"
         android:text="Send Data"
         android:textSize="24dp"
@@ -194,9 +194,9 @@
         android:layout_height="55dp"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:background="@color/purple"
+        android:background="@drawable/gradient_2"
         android:fontFamily="@font/oswald"
-        android:text="Open Tutorial"
+        android:text="SETTINGS"
 
         android:textSize="24dp"
         app:layout_constraintBottom_toTopOf="@+id/buttonMainEvaluation2"
@@ -223,10 +223,10 @@
         android:layout_height="55dp"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:background="@color/purple"
+        android:background="@drawable/gradient_2"
 
         android:fontFamily="@font/oswald"
-        android:text="Information about Dairy Studies"
+        android:text="Information about ESM Studies"
         android:textSize="23dp"
         app:layout_constraintBottom_toTopOf="@+id/buttonSendData"
         app:layout_constraintEnd_toEndOf="parent"

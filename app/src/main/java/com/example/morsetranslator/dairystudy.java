@@ -268,6 +268,7 @@ public class dairystudy extends AppCompatActivity {
         {
             long[] pattern = new long[]{0,  duration,interval};
             mvibrator.vibrate(pattern,-1);
+            Log.e("I am condition 1",String.valueOf(condition));
         }
         if(condition==2)
         {
@@ -275,6 +276,7 @@ public class dairystudy extends AppCompatActivity {
             int randInt=(r.nextInt(100));
             long[] pattern=new long[]{randInt, duration, interval};
             Log.e("randInt",String.valueOf(randInt));
+            Log.e("I am condition 2",String.valueOf(condition));
             mvibrator.vibrate(pattern,-1);
         }
         if(condition==3)
@@ -283,8 +285,20 @@ public class dairystudy extends AppCompatActivity {
             int randInt=(r.nextInt(300));
             long[] pattern=new long[]{0, duration, interval+randInt};
             Log.e("randInt",String.valueOf(randInt));
+            Log.e("I am condition 3",String.valueOf(condition));
             mvibrator.vibrate(pattern,-1);
 
+
+        }
+
+        if(condition==4)
+        {
+            Random r=new Random();
+            int randInt=(r.nextInt(300));
+            long[] pattern=new long[]{randInt,duration,interval+randInt};
+            Log.e("randInt",String.valueOf(randInt));
+            mvibrator.vibrate(pattern,-1);
+            Log.e("I am condition 4",String.valueOf(condition));
 
         }
 

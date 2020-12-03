@@ -72,23 +72,24 @@ public class HABlindTutorial extends AppCompatActivity {
                 //startActivityForResult(intent,1);
             }
         });
-        t2 = new TextToSpeech(this, new TextToSpeech.OnInitListener() {
-            @Override
-            public void onInit(int status) {
-                if (status == TextToSpeech.SUCCESS) {
-                    int result = t2.setLanguage(Locale.US);
-                    if (result == TextToSpeech.LANG_MISSING_DATA
-                            || result == TextToSpeech.LANG_NOT_SUPPORTED) {
-                        Log.e("TTS", "Language not supported");
-                    } else {
-                        //mButtonSpeak.setEnabled(true);
-                    }
-                } else {
-                    Log.e("Text to Speech", "Initialization failed");
-                }
-            }
-        });
+//        t2 = new TextToSpeech(this, new TextToSpeech.OnInitListener() {
+//            @Override
+//            public void onInit(int status) {
+//                if (status == TextToSpeech.SUCCESS) {
+//                    int result = t2.setLanguage(Locale.US);
+//                    if (result == TextToSpeech.LANG_MISSING_DATA
+//                            || result == TextToSpeech.LANG_NOT_SUPPORTED) {
+//                        Log.e("TTS", "Language not supported");
+//                    } else {
+//                        //mButtonSpeak.setEnabled(true);
+//                    }
+//                } else {
+//                    Log.e("Text to Speech", "Initialization failed");
+//                }
+//            }
+//        });
 
+//        tv_vduration.setText("Vibration Duration: 0/100");
 
         seekBar_vduration.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             final int seek = 0;
@@ -110,6 +111,9 @@ public class HABlindTutorial extends AppCompatActivity {
 
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
+                tv_vduration.setText("Vibration Duration:" + seekBar.getProgress() + "/" + seekBar.getMax());
+
+
 
             }
 
@@ -143,6 +147,8 @@ public class HABlindTutorial extends AppCompatActivity {
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
                 //Toast.makeText(getApplicationContext(), "Tutorial Speed:", Toast.LENGTH_SHORT).show();
+                tv_vinterval.setText("Vibration Interval:" + seekBar.getProgress() + "/" + seekBar.getMax());
+
 
             }
 

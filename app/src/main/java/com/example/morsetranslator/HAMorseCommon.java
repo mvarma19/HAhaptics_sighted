@@ -22,7 +22,7 @@ public class HAMorseCommon {
     static int timeunit=HABlindTutorial.timeunit;
 
 
-    static int[] conditionArray = new int[] {1,2,3}; //no condition 5.
+    static int[] conditionArray = new int[] {1,2,3,4}; //no condition 5.
 //    static int[] videoConditionArray=new int[] {1,2,3,4,6,7,8};
     //static int[] conditionArray = new int[] {3,21,2,3,4,6,7,8}; //no condition 5.
     static int conditionIndex=0;
