@@ -177,7 +177,8 @@
         android:background="#41B3A3"
         android:fontFamily="@font/oswald"
         android:gravity="center_horizontal|center_vertical"
-        android:text="Tap to enter PIN"
+        android:text="Hold and release to enter PIN"
+
         android:textSize="30sp"
         app:layout_constraintBottom_toTopOf="@+id/guideline22"
         app:layout_constraintEnd_toStartOf="@+id/guideline12"
@@ -252,10 +253,11 @@
         android:fontFamily="@font/oswald"
         android:gravity="center_horizontal|center_vertical"
         android:text="DELETE"
+        android:textColor="#000000"
         android:textSize="20dp"
         app:layout_constraintBottom_toTopOf="@+id/guideline19"
         app:layout_constraintEnd_toStartOf="@+id/guideline11"
-        app:layout_constraintHorizontal_bias="0.808"
+        app:layout_constraintHorizontal_bias="0.685"
         app:layout_constraintStart_toStartOf="@+id/guideline10"
         app:layout_constraintTop_toTopOf="@+id/guideline18"
         app:layout_constraintVertical_bias="1.0" />
@@ -268,10 +270,11 @@
         android:fontFamily="@font/oswald"
         android:gravity="center_horizontal|center_vertical"
         android:text="CLEAR"
+        android:textColor="#000000"
         android:textSize="20dp"
         app:layout_constraintBottom_toTopOf="@+id/guideline19"
         app:layout_constraintEnd_toStartOf="@+id/guideline4"
-        app:layout_constraintHorizontal_bias="0.886"
+        app:layout_constraintHorizontal_bias="0.537"
         app:layout_constraintStart_toStartOf="@+id/guideline21"
         app:layout_constraintTop_toTopOf="@+id/guideline18"
         app:layout_constraintVertical_bias="1.0" />
@@ -280,14 +283,17 @@
         android:id="@+id/input"
         android:layout_width="414dp"
         android:layout_height="74dp"
-        android:textSize="25sp"
-        android:inputType="numberPassword"
+        android:fontFamily="@font/oswald"
         android:gravity="center"
+        android:hint="Enter the PIN"
+        android:inputType="numberPassword"
+        android:textSize="25sp"
         app:layout_constraintBottom_toTopOf="@+id/continue_button"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.99" />
+        app:layout_constraintVertical_bias="0.421" />
 
     <TextView
         android:id="@+id/tvtrial"
@@ -340,16 +346,16 @@
         android:layout_width="193dp"
         android:layout_height="74dp"
         android:background="#41B3A3"
-        android:text="Continue"
         android:fontFamily="@font/oswald"
+        android:text="Continue"
         android:textSize="30dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/guideline4"
-        app:layout_constraintHorizontal_bias="0.559"
+        app:layout_constraintHorizontal_bias="0.504"
         app:layout_constraintStart_toStartOf="parent"
 
         app:layout_constraintTop_toTopOf="@+id/guideline18"
-        app:layout_constraintVertical_bias="0.926" />
+        app:layout_constraintVertical_bias="0.733" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
