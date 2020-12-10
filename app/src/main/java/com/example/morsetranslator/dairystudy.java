@@ -1,6 +1,7 @@
 package com.example.morsetranslator;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Vibrator;
@@ -12,6 +13,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.Calendar;
@@ -36,6 +38,7 @@ public class dairystudy extends AppCompatActivity {
     TextView trialTV;
     String fileWriteString="";
     Button change;
+    AlertDialog.Builder builder;
     int duration=HABlindTutorial.duration;
     int interval=HABlindTutorial.interval;
 
@@ -80,6 +83,7 @@ public class dairystudy extends AppCompatActivity {
         duration_tv.setText("Vibration Duration: "+String.valueOf(duration)+"/100");
         interval_tv.setText("Vibration Interval: "+String.valueOf(interval)+"/400");
         change=(Button)findViewById(R.id.change_button);
+        builder = new AlertDialog.Builder(this);
         change.setEnabled(false);
 //        t2 = new TextToSpeech(this, new TextToSpeech.OnInitListener() {
 //            @Override
@@ -237,26 +241,37 @@ public class dairystudy extends AppCompatActivity {
                     Log.e("Eval", String.valueOf(evalPW) + " INCORRECT " + pw);
                 }
                 Log.e("Answers", "Empty Text lah");
-                Toast toast1 = Toast.makeText(getApplicationContext(), "Required PIN: " + String.format("%04d", evalPW) + "\nPIN you entered: " + pw, Toast.LENGTH_SHORT);
-                toast1.show();
+                builder.setMessage("Required PIN: " + String.format("%04d", evalPW) + "\nPIN you entered: " + pw)
+
+                        .setPositiveButton("Okay!", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                generateEvaluationPassword();
+                                pw = "";
+                                pwTV.setText(pw);
+                                //shifts=0;
+                                trial++;
+
+                                if (trial >= 3) {
+
+                                    HAMorseCommon.conditionIndex++;
+                                     Log.e("CONDITIONS:",String.valueOf(HAMorseCommon.conditionIndex));
+                                    HAMorseCommon.conditionIndex--;
+                                     addToBundleAndOpenActivity(HAQaulEvaluation.class);
+
+                                }
+                                updateTV();
+                                startTime = Calendar.getInstance().getTimeInMillis();
+
+                            }
+                        });
+                AlertDialog alert = builder.create();
+                //Setting the title manually
+                alert.setTitle("PIN information");
+                alert.show();
+
                 fileWriteString = "result," + String.valueOf(evalPW) + "," + trial + "," + String.valueOf(startTime) + "," + String.valueOf(Calendar.getInstance().getTimeInMillis()) + "," + String.format("%04d", evalPW) + "," + pw + "," + HAMorseCommon.dateTime() + "\n";
                 HAMorseCommon.writeAnswerToFile(getApplicationContext(), fileWriteString);
-                generateEvaluationPassword();
-                pw = "";
-                pwTV.setText(pw);
 
-                trial++;
-
-                if (trial >= 3) {
-                    HAMorseCommon.conditionIndex++;
-                    Log.e("CONDITIONS:",String.valueOf(HAMorseCommon.conditionIndex));
-                    HAMorseCommon.conditionIndex--;
-                    addToBundleAndOpenActivity(HAQaulEvaluation.class);
-
-
-                }
-                updateTV();
-                startTime = Calendar.getInstance().getTimeInMillis();
 
 
             }
