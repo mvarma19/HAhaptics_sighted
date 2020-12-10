@@ -16,7 +16,10 @@
  import android.widget.TextView;
  import android.widget.Toast;
 
+ import com.google.android.material.snackbar.Snackbar;
+
  import androidx.appcompat.app.AppCompatActivity;
+ import androidx.coordinatorlayout.widget.CoordinatorLayout;
 
  import java.io.BufferedWriter;
  import java.io.File;
@@ -36,6 +39,7 @@ public class HABlindTutorial extends AppCompatActivity {
     SeekBar seekBar_vinterval;
     SeekBar seekBar_vduration;
     Button tv;
+    private CoordinatorLayout coordinatorLayout;
     TextView pwTV;
     TextView tv_vinterval;
     TextView hiddentextview;
@@ -101,13 +105,17 @@ public class HABlindTutorial extends AppCompatActivity {
                 tv_vduration.setText("Vibration Duration:" + seekBar.getProgress() + "/" + seekBar.getMax());
                 progress = ((int) Math.round(progress / yourStep)) * yourStep;
                 seekBar.setProgress(progress);
-                Toast.makeText(getApplicationContext(), valueOf(progress), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getApplicationContext(), valueOf(progress), Toast.LENGTH_SHORT).show();
+
                 duration = seekBar.getProgress();
+                Snackbar snackbar = Snackbar.make(seekBar,valueOf(progress), Snackbar.LENGTH_SHORT);
+                snackbar.show();
 
                 //mvibrator.vibrate(100);
                 //t2.speak("Vibration Duration Changed to:"+String.valueOf(duration),TextToSpeech.QUEUE_FLUSH,null);
 
             }
+
 
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
@@ -121,6 +129,7 @@ public class HABlindTutorial extends AppCompatActivity {
             public void onStopTrackingTouch(SeekBar seekBar) {
                 mvibrator.vibrate(100);
 
+
             }
         });
 
@@ -133,7 +142,9 @@ public class HABlindTutorial extends AppCompatActivity {
                 tv_vinterval.setText("Vibration Interval:" + seekBar.getProgress() + "/" + seekBar.getMax());
                 progresValue = ((int) Math.round(progresValue / yourStep)) * yourStep;
                 seekBar.setProgress(progresValue);
-                Toast.makeText(getApplicationContext(), valueOf(progresValue), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getApplicationContext(), valueOf(progresValue), Toast.LENGTH_SHORT).show();
+//                Snackbar snackbar = Snackbar.make(seekBar,valueOf(progresValue), Snackbar.LENGTH_SHORT);
+//                snackbar.show();
                 interval = seekBar.getProgress();
 
                 //t2.speak("Vibration Interval Changed to:"+String.valueOf(interval),TextToSpeech.QUEUE_FLUSH,null);
@@ -263,8 +274,8 @@ public class HABlindTutorial extends AppCompatActivity {
             } else {
 
                 BufferedWriter writer = new BufferedWriter(new FileWriter(testFile, true /*append*/));
-                writer.write("Current Vibration Interval is :" + interval + "\n");
-                writer.write("Current Vibration Duration is :" + duration + "\n");
+                writer.write("Current Vibration Interval is :" + valueOf(interval) + "\n");
+                writer.write("Current Vibration Duration is :" + valueOf(duration) + "\n");
 
                 writer.close();
                 Log.e("FilePath", getApplicationContext().getApplicationContext().getPackageName() + "/TestFile.txt");
