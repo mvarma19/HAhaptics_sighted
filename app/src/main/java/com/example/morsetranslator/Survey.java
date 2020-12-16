@@ -1,22 +1,22 @@
 package com.example.morsetranslator;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-
-import static com.example.morsetranslator.HAMorseCommon.user;
 
 public class Survey extends AppCompatActivity {
     TextView title;
@@ -31,6 +31,7 @@ public class Survey extends AppCompatActivity {
     TextView mentalhigh;
     EditText comments;
     String[] questionsList;
+
     public static ArrayList<String> selectedAnswers;
 
     RadioButton improve_yes;
@@ -41,7 +42,6 @@ public class Survey extends AppCompatActivity {
 
     int expCondition=HAMorseCommon.conditionArray[HAMorseCommon.conditionIndex];
     String type="qualitative";
-
 
 
 
@@ -64,7 +64,7 @@ public class Survey extends AppCompatActivity {
         again_no=(RadioButton)findViewById(R.id.future_no);
         improve_no = (RadioButton) findViewById(R.id.improve_no);
         bSubmit = findViewById(R.id.submit);
-       
+
 
 
         processSB(mentaldemandseek,mentaldemand,"Mental demand:");
@@ -72,19 +72,18 @@ public class Survey extends AppCompatActivity {
         bSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String result = "Selected option: ";
+                result+= (improve_yes.isChecked())?"Yes":(improve_no.isChecked())?"No":(again_yes.isChecked())?"Yes":(again_no.isChecked())?"No":"";
                 String fileWriteString="0QE,"+expCondition+",,"
                         +String.valueOf(confidenceseek.getProgress())+","
                         +String.valueOf(mentaldemandseek.getProgress())+","
+                        +String.valueOf(comments) +","
+                        +result
 
-                        +comments
-                        +improve_no
-                        +improve_yes
-                        +again_no
-                        +again_yes
-                        +String.valueOf(improve_yes)+","
-                        +String.valueOf(improve_no)+","
-                        +String.valueOf(again_yes)+","
-                        +String.valueOf(again_no)+","
+
+
+              //  result+= (improve_yes.isChecked())?"":(improve_no.isChecked())?"":(again_yes.isChecked())?"":(again_no.isChecked())?"":""
+
 
 
 
@@ -104,6 +103,8 @@ public class Survey extends AppCompatActivity {
 
 
     }
+
+
 
 
     private void processSB(final SeekBar sb, final TextView tv, final String string){
@@ -129,7 +130,30 @@ public class Survey extends AppCompatActivity {
         });
 
     }
-
+    public void onRadioButtonClicked(View view) {
+        boolean checked = ((RadioButton) view).isChecked();
+        String str="";
+        // Check which radio button was clicked
+        switch(view.getId()) {
+            case R.id.improve_yes:
+                if(checked)
+                    str = "Yes selected";
+                break;
+            case R.id.improve_no:
+                if(checked)
+                    str = "No Selected";
+                break;
+            case R.id.future_yes:
+                if(checked)
+                    str = "Yes selected";
+                break;
+            case R.id.future_no:
+                if(checked)
+                    str = "No Selected";
+                break;
+        }
+        Toast.makeText(getApplicationContext(), str, Toast.LENGTH_SHORT).show();
+    }
 
 
     void addToBundleAndOpenActivity(Class cls){
