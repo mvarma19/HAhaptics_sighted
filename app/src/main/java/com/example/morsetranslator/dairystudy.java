@@ -256,7 +256,7 @@ public class dairystudy extends AppCompatActivity {
                                     HAMorseCommon.conditionIndex++;
                                      Log.e("CONDITIONS:",String.valueOf(HAMorseCommon.conditionIndex));
                                     HAMorseCommon.conditionIndex--;
-                                     addToBundleAndOpenActivity(HAQaulEvaluation.class);
+                                     addToBundleAndOpenActivity(Survey.class);
 
                                 }
                                 updateTV();

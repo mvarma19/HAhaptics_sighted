@@ -56,10 +56,10 @@ public class HABlindTutorial extends AppCompatActivity {
     static int timeunit=100;
     public boolean touchevent = false;
     private TextToSpeech t2;
-    static int duration=0;
+    static int duration=10;
     String username;
    Bundle bundle;
-    static int interval=0;
+    static int interval=100;
     TextView tv_vduration;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,7 +72,7 @@ public class HABlindTutorial extends AppCompatActivity {
         continue_tutorial.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                addToBundleAndOpenActivity(enterPWtutorial.class);
+                addToBundleAndOpenActivity(HAMainScreen.class);
                 //startActivityForResult(intent,1);
             }
         });
@@ -96,7 +96,7 @@ public class HABlindTutorial extends AppCompatActivity {
 //        tv_vduration.setText("Vibration Duration: 0/100");
 
         seekBar_vduration.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            final int seek = 0;
+            final int seek = 10;
             final int yourStep = 10;
 
             //int progressValue=0;
@@ -108,8 +108,8 @@ public class HABlindTutorial extends AppCompatActivity {
                 //Toast.makeText(getApplicationContext(), valueOf(progress), Toast.LENGTH_SHORT).show();
 
                 duration = seekBar.getProgress();
-                Snackbar snackbar = Snackbar.make(seekBar,valueOf(progress), Snackbar.LENGTH_SHORT);
-                snackbar.show();
+//                Snackbar snackbar = Snackbar.make(seekBar,valueOf(progress), Snackbar.LENGTH_SHORT);
+//                snackbar.show();
 
                 //mvibrator.vibrate(100);
                 //t2.speak("Vibration Duration Changed to:"+String.valueOf(duration),TextToSpeech.QUEUE_FLUSH,null);
@@ -120,6 +120,7 @@ public class HABlindTutorial extends AppCompatActivity {
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
                 tv_vduration.setText("Vibration Duration:" + seekBar.getProgress() + "/" + seekBar.getMax());
+
 
 
 
@@ -427,51 +428,20 @@ public class HABlindTutorial extends AppCompatActivity {
                 if (Math.abs(down - System.currentTimeMillis()) > 310) {
                     Log.d("TAG", "Thread");
                     down = System.currentTimeMillis();
-
-//                    if (timeunit == 100) {
-//                        Log.d("TAG", "Entered value is:" + timeunit);
-//                        mvibrator.vibrate(10);
-//                        SystemClock.sleep(170);
-//
-//
-//
-//                    }
                     Vibrator mvibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-                    long[] pattern = new long[]{0, seekBar_vduration.getProgress(), seekBar_vinterval.getProgress()};
-                    //Log.e(String.valueOf(tu), "run: I am tu");
+                    long[] pattern = new long[]{0, duration,interval};
 
-                    //Log.i(String.valueOf(tu), "vibrating with pattern: " + String.valueOf(pattern));
 
-                    mvibrator.vibrate(pattern, 0);
+                    mvibrator.vibrate(pattern, -1);
 
-//                    //mvibrator.vibrate(VibrationEffect.createOneShot(100,VibrationEffect.DEFAULT_AMPLITUDE));
-//                    if (timeunit == 200) {
-//                        mvibrator.vibrate(200);
-//                        Log.d("TAG", "value is:"+timeunit);
-//                    }
-//
-//                    //mvibrator.vibrate(VibrationEffect.createOneShot(200,VibrationEffect.DEFAULT_AMPLITUDE));
-//                    if (timeunit == 300) {
-//                        Log.d("TAG", valueOf(timeunit));
-//                        mvibrator.vibrate(300);
-//                    }
-//
-//
-//                    //mvibrator.vibrate(VibrationEffect.createOneShot(300,VibrationEffect.DEFAULT_AMPLITUDE));
-//                    if (timeunit == 400) {
-//                        Log.d("TAG", valueOf(timeunit));
-//
-//                        // Log.d("TAG", String.valueOf(Integer.parseInt(mvibrator.toString())));
-//                        mvibrator.vibrate(400);
-//                    }
-//                    //mvibrator.vibrate(VibrationEffect.createOneShot(400,VibrationEffect.DEFAULT_AMPLITUDE));
+
                     count++;
                     if (count == 10 || count > 10) {
                         count = 0;
                     }
                 }
             }
-                //t2.speak(String.valueOf(count),TextToSpeech.QUEUE_ADD,null);
+
 
                 if (!touchevent) {
 

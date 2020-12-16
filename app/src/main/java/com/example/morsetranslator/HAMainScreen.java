@@ -37,6 +37,7 @@ public class HAMainScreen extends AppCompatActivity  {
         final Button openLogin = (Button) findViewById(R.id.buttonMainLoginScreen2);
         final Button openEval = (Button) findViewById(R.id.buttonMainEvaluation2);
         Button sendData = (Button) findViewById(R.id.buttonSendData);
+        Button practice=(Button)findViewById(R.id.practice);
         //checkBox = (CheckBox) findViewById(R.id.accessibility);
         //Button openForVideo = (Button) findViewById(R.id.buttonExpertEval);
         username = (EditText) findViewById(R.id.uname2);
@@ -140,6 +141,12 @@ public class HAMainScreen extends AppCompatActivity  {
                     HAMorseCommon.sendEmail(HAMainScreen.this);
                     //addToBundleAndOpenActivity(ScrollTest.class);
                 }
+            }
+        });
+        practice.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addToBundleAndOpenActivity(enterPWtutorial.class);
             }
         });
 

@@ -44,8 +44,8 @@ public class enterPWtutorial extends AppCompatActivity {
     TextView trialTV;
     String fileWriteString = "";
 
-    int duration;
-    int interval;
+    int duration=HABlindTutorial.duration;
+    int interval=HABlindTutorial.interval;
     Button change;
     private TextToSpeech t2;
     //String pwstore="";
