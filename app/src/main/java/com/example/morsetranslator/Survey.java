@@ -64,10 +64,7 @@ public class Survey extends AppCompatActivity {
         again_no=(RadioButton)findViewById(R.id.future_no);
         improve_no = (RadioButton) findViewById(R.id.improve_no);
         bSubmit = findViewById(R.id.submit);
-        selectedAnswers = new ArrayList<>();
-        for (int i = 0; i < questionsList.length; i++) {
-            selectedAnswers.add("Not Attempted");
-        }
+       
 
 
         processSB(mentaldemandseek,mentaldemand,"Mental demand:");
@@ -133,7 +130,7 @@ public class Survey extends AppCompatActivity {
 
     }
 
-   
+
 
     void addToBundleAndOpenActivity(Class cls){
         Intent intent = new Intent(Survey.this, cls);
