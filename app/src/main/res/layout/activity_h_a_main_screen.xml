@@ -35,11 +35,14 @@
         android:layout_marginTop="28dp"
         android:background="@drawable/gradient_2"
         android:fontFamily="@font/oswald"
-        android:text="Perform ESM Studies "
+        android:text="Perform Login Method "
         android:textSize="24dp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline28"
         app:layout_constraintEnd_toStartOf="@+id/guideline38"
+        app:layout_constraintHorizontal_bias="0.576"
         app:layout_constraintStart_toStartOf="@+id/guideline36"
-        app:layout_constraintTop_toBottomOf="@+id/practice" />
+        app:layout_constraintTop_toBottomOf="@+id/practice"
+        app:layout_constraintVertical_bias="0.355" />
 
     <Button
         android:id="@+id/buttonSendData"
@@ -47,7 +50,6 @@
         android:layout_height="55dp"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:layout_marginTop="40dp"
         android:background="@drawable/gradient_2"
         android:fontFamily="@font/oswald"
 
@@ -58,7 +60,7 @@
         app:layout_constraintEnd_toStartOf="@+id/guideline38"
         app:layout_constraintHorizontal_bias="0.576"
         app:layout_constraintStart_toStartOf="@+id/guideline36"
-        app:layout_constraintTop_toBottomOf="@+id/buttonMainLoginScreen2" />
+        app:layout_constraintTop_toTopOf="@+id/guideline28" />
 
     <Button
         android:id="@+id/buttonMainTutorial2"
@@ -73,24 +75,9 @@
         android:text="SETTINGS"
         android:textSize="24dp"
         app:layout_constraintEnd_toStartOf="@+id/guideline38"
+        app:layout_constraintHorizontal_bias="0.576"
         app:layout_constraintStart_toStartOf="@+id/guideline36"
         app:layout_constraintTop_toTopOf="@+id/guideline35" />
-
-    <Button
-        android:id="@+id/buttonMainLoginScreen2"
-        android:layout_width="327dp"
-        android:layout_height="55dp"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-
-        android:layout_marginTop="28dp"
-        android:background="@drawable/gradient_2"
-        android:fontFamily="@font/oswald"
-        android:text="Information about ESM studies"
-        android:textSize="23dp"
-        app:layout_constraintEnd_toStartOf="@+id/guideline38"
-        app:layout_constraintStart_toStartOf="@+id/guideline36"
-        app:layout_constraintTop_toBottomOf="@+id/buttonMainEvaluation2" />
 
     <Button
         android:id="@+id/practice"
@@ -99,12 +86,13 @@
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
 
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="56dp"
         android:background="@drawable/gradient_2"
         android:fontFamily="@font/oswald"
         android:text="practice"
         android:textSize="23dp"
         app:layout_constraintEnd_toStartOf="@+id/guideline38"
+        app:layout_constraintHorizontal_bias="0.576"
         app:layout_constraintStart_toStartOf="@+id/guideline36"
         app:layout_constraintTop_toBottomOf="@+id/buttonMainTutorial2" />
 
@@ -158,6 +146,13 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_begin="380dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline28"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="517dp" />
 
     <!--    <CheckBox-->
     <!--        android:id="@+id/accessibility"-->

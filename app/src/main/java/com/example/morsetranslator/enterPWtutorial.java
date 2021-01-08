@@ -78,7 +78,7 @@ public class enterPWtutorial extends AppCompatActivity {
         //enterTV=(TextView) findViewById(R.id.enter);
         continue_trial = (Button) findViewById(R.id.continue_button);
         trialTV = (TextView) findViewById(R.id.tvtrial);
-        trialTV.setText("Trial " + String.valueOf(trial) + "/3 ");
+        trialTV.setText("Trial " + String.valueOf(trial) + "/5 ");
         duration_tv = (TextView) findViewById(R.id.duration);
         interval_tv = (TextView) findViewById(R.id.interval);
         duration_tv.setText("Vibration Duration: " + String.valueOf(duration) + "/100");
@@ -86,22 +86,7 @@ public class enterPWtutorial extends AppCompatActivity {
         change = (Button) findViewById(R.id.change_button);
         builder = new AlertDialog.Builder(this);
         change.setEnabled(false);
-        t2 = new TextToSpeech(this, new TextToSpeech.OnInitListener() {
-            @Override
-            public void onInit(int status) {
-                if (status == TextToSpeech.SUCCESS) {
-                    int result = t2.setLanguage(Locale.US);
-                    if (result == TextToSpeech.LANG_MISSING_DATA
-                            || result == TextToSpeech.LANG_NOT_SUPPORTED) {
-                        Log.e("TTS", "Language not supported");
-                    } else {
-                        //mButtonSpeak.setEnabled(true);
-                    }
-                } else {
-                    Log.e("Text to Speech", "Initialization failed");
-                }
-            }
-        });
+
 
 
         //conditionTV=(TextView) findViewById(R.id.tvcondition);
@@ -251,8 +236,12 @@ public class enterPWtutorial extends AppCompatActivity {
                                 pwTV.setText(pw);
                                 //shifts=0;
                                 trial++;
+                                updateTV();
+                                fileWriteString = "Practise PIN," + String.valueOf(evalPW) + "," + trial + "Start is time:," + String.valueOf(startTime) + "Today's date with seconds," + String.valueOf(Calendar.getInstance().getTimeInMillis()) + "PIN required," + String.format("%04d", evalPW) + "PIN entered:," + pw + " Date:," + HAMorseCommon.dateTime() + "\n";
+                                fileWriteString="Selected Vibration duration and Interval are:"+duration+","+interval;
+                                HAMorseCommon.writeAnswerToFile(getApplicationContext(), fileWriteString);
 
-                                if (trial >= 4) {
+                                if (trial >= 6) {
                                     //HAMorseCommon.user = username;
                                     addToBundleAndOpenActivity(HAMainScreen.class);
 
@@ -276,8 +265,9 @@ public class enterPWtutorial extends AppCompatActivity {
 
 //                                Toast toast1 = Toast.makeText(getApplicationContext(), "Required PIN: " + String.format("%04d", evalPW) + "\nPIN you entered: " + pw, Toast.LENGTH_SHORT);
 //                                toast1.show();
-        fileWriteString = "result," + String.valueOf(evalPW) + "," + trial + "," + String.valueOf(startTime) + "," + String.valueOf(Calendar.getInstance().getTimeInMillis()) + "," + String.format("%04d", evalPW) + "," + pw + "," + HAMorseCommon.dateTime() + "\n";
-        HAMorseCommon.writeAnswerToFile(getApplicationContext(), fileWriteString);
+
+
+
 //        generateEvaluationPassword();
 //        pw = "";
 //        pwTV.setText(pw);
@@ -318,7 +308,7 @@ public class enterPWtutorial extends AppCompatActivity {
     }
 
     private void updateTV() {
-        trialTV.setText("Trial " + String.valueOf(trial) + "/3 ");
+        trialTV.setText("Trial " + String.valueOf(trial) + "/5 ");
 
         Log.e("trial:" + String.valueOf(trial), String.valueOf(trial));
 

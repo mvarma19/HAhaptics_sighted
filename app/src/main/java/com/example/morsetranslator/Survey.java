@@ -64,21 +64,28 @@ public class Survey extends AppCompatActivity {
         again_no=(RadioButton)findViewById(R.id.future_no);
         improve_no = (RadioButton) findViewById(R.id.improve_no);
         bSubmit = findViewById(R.id.submit);
+        comments=(EditText)findViewById(R.id.comments_user);
+
 
 
 
         processSB(mentaldemandseek,mentaldemand,"Mental demand:");
         processSB(confidenceseek,confidence,"Confidence:");
+
         bSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String commentbyuser=comments.toString();
+
                 String result = "Selected option: ";
                 result+= (improve_yes.isChecked())?"Yes":(improve_no.isChecked())?"No":(again_yes.isChecked())?"Yes":(again_no.isChecked())?"No":"";
                 String fileWriteString="0QE,"+expCondition+",,"
                         +String.valueOf(confidenceseek.getProgress())+","
                         +String.valueOf(mentaldemandseek.getProgress())+","
-                        +String.valueOf(comments) +","
-                        +result
+                        +commentbyuser +","
+                        +result+","
+                        
+
 
 
 

@@ -25,6 +25,7 @@
  import java.io.File;
  import java.io.FileWriter;
  import java.io.IOException;
+ import java.util.Calendar;
  import java.util.Locale;
 
  import static androidx.core.content.FileProvider.getUriForFile;
@@ -57,6 +58,7 @@ public class HABlindTutorial extends AppCompatActivity {
     public boolean touchevent = false;
     private TextToSpeech t2;
     static int duration=10;
+    String fileWriteString = "";
     String username;
    Bundle bundle;
     static int interval=100;
@@ -173,23 +175,7 @@ public class HABlindTutorial extends AppCompatActivity {
 
 
 
-//                t2 = new TextToSpeech(this, new TextToSpeech.OnInitListener() {
-//                    @Override
-//                    public void onInit(int status) {
-//                        if (status == TextToSpeech.SUCCESS) {
-//                            int result = t2.setLanguage(Locale.US);
-//                            if (result == TextToSpeech.LANG_MISSING_DATA
-//                                    || result == TextToSpeech.LANG_NOT_SUPPORTED) {
-//                                Log.e("TTS", "Language not supported");
-//                            } else {
-//
-//                            }
-//                        } else {
-//                            Log.e("Text to Speech", "Initialization failed");
-//                        }
-//
-//                    }
-//                });
+
 
 
         tv = (Button) findViewById(R.id.tvb);
@@ -240,113 +226,76 @@ public class HABlindTutorial extends AppCompatActivity {
         tv_vinterval = (TextView) findViewById(R.id.vibration_interval);
         seekBar_vduration=(SeekBar)findViewById(R.id.vibration_durationseekbar);
         tv_vduration=(TextView)findViewById(R.id.vibrationintervaltv);
+
     }
-    public void fileSaving(){
-        try {
-            // Creates a file in the primary external storage space of the
-            // current application.
-            // If the file does not exists, it is created.
-            File filePath = new File(this.getFilesDir(), "docs");
-            if (!filePath.exists()){
-                filePath.mkdir();
-                //newFile.createNewFile();
-                // Adds a line to the file
-                //Uri contentUri = getUriForFile(this, "com.example.morsetranslator.fileprovider", newFile);
-            }
-            File newFile = new File(filePath, "new2_image.txt");
-            File testFile = new File(this.getExternalFilesDir(null), "TestFile1.txt");
-            Uri paths = getUriForFile(this, "com.example.morsetranslator.provider", newFile);
-            Log.e("URIFilePath", paths.toString());
-            BufferedWriter writerImage = new BufferedWriter(new FileWriter(newFile, true /*append*/));
-            writerImage.write("Current vibration interval is :" + interval + "\n");
-            writerImage.write("Current vibration duration is :" + duration + "\n");
-
-
-            writerImage.close();
-            Log.e("FilePath", getApplicationContext().getApplicationContext().getPackageName() + "/TestFile.txt");
-
-
-            if (!testFile.exists()) {
-                testFile.createNewFile();
-                // Adds a line to the file
-                BufferedWriter writer = new BufferedWriter(new FileWriter(testFile, true /*append*/));
-                writer.write("This is a test file.");
-                writer.close();
-            } else {
-
-                BufferedWriter writer = new BufferedWriter(new FileWriter(testFile, true /*append*/));
-                writer.write("Current Vibration Interval is :" + valueOf(interval) + "\n");
-                writer.write("Current Vibration Duration is :" + valueOf(duration) + "\n");
-
-                writer.close();
-                Log.e("FilePath", getApplicationContext().getApplicationContext().getPackageName() + "/TestFile.txt");
-            }
-            // Refresh the data so it can seen when the device is plugged in a
-            // computer. You may have to unplug and replug the device to see the
-            // latest changes. This is not necessary if the user should not modify
-            // the files.
-            MediaScannerConnection.scanFile(this,
-                    new String[]{testFile.toString()},
-                    null,
-                    null);
-            //String filename="contacts_sid.txt";
-            //File testFile1 = new File(Environment.getExternalStorageDirectory().getAbsolutePath(), filename);
-            Uri path = Uri.fromFile(testFile);
-            Log.e("FilePath",path.toString());
-            Intent emailIntent = new Intent(Intent.ACTION_SEND);
-// set the type to 'email'
-            emailIntent .setType("vnd.android.cursor.dir/email");
-            String[] to = {"roshan82@gmail.com"};
-            emailIntent .putExtra(Intent.EXTRA_EMAIL, to);
-// the attachment
-            emailIntent .putExtra(Intent.EXTRA_STREAM, paths);
-// the mail subject
-            emailIntent .putExtra(Intent.EXTRA_SUBJECT, "Subject");
-            startActivity(Intent.createChooser(emailIntent , "Send email..."));
-        } catch (IOException e) {
-            Log.e("ReadWriteFile", "Unable to write to the file."+e);
-        }
-    }
-
-//    public void processPress(MotionEvent e, int tv) {
-//        if (e.getAction() == MotionEvent.ACTION_UP) {
-//            Log.e("Touch button", valueOf(tv));
-//            //vibrate(numberPad[tv]);
-//        }
-//        if (e.getAction() == MotionEvent.ACTION_DOWN) {
-//            Log.e("remove finger", valueOf(tv));
-//            mvibrator.cancel();
-//            //SystemClock.sleep(1000);
+//    public void fileSaving(){
+//        try {
+//            // Creates a file in the primary external storage space of the
+//            // current application.
+//            // If the file does not exists, it is created.
+//            File filePath = new File(this.getFilesDir(), "docs");
+//            if (!filePath.exists()){
+//                filePath.mkdir();
+//                //newFile.createNewFile();
+//                // Adds a line to the file
+//                //Uri contentUri = getUriForFile(this, "com.example.morsetranslator.fileprovider", newFile);
+//            }
+//            File newFile = new File(filePath, "new2_image.txt");
+//            File testFile = new File(this.getExternalFilesDir(null), "TestFile1.txt");
+//            Uri paths = getUriForFile(this, "com.example.morsetranslator.provider", newFile);
+//            Log.e("URIFilePath", paths.toString());
+//            BufferedWriter writerImage = new BufferedWriter(new FileWriter(newFile, true /*append*/));
+//            writerImage.write("Current vibration interval is :" + interval+ "\n");
+//            writerImage.write("Current vibration duration is :" + duration + "\n");
 //
-//        }
-//        if (e.getAction() == MotionEvent.ACTION_HOVER_ENTER) {
-//            Log.e("HoverEnter", valueOf(tv));
-//            mvibrator.cancel();
-//            //SystemClock.sleep(1000);
 //
-//        }
-//        if (e.getAction() == MotionEvent.ACTION_MOVE) {
-//            Log.e("Moving", valueOf(tv));
-//            mvibrator.cancel();
-//            //SystemClock.sleep(1000);
+//            writerImage.close();
+//            Log.e("FilePath", getApplicationContext().getApplicationContext().getPackageName() + "/TestFile.txt");
 //
-//        }
-//        if (e.getAction() == MotionEvent.ACTION_HOVER_MOVE) {
-//            Log.e("HoverMoving", valueOf(tv));
-//            mvibrator.cancel();
-//            SystemClock.sleep(1000);
 //
-//        }
-//        if (e.getAction() == MotionEvent.ACTION_HOVER_EXIT) {
-//            Log.e("HoverExit", valueOf(tv));
-//            mvibrator.cancel();
-//            //SystemClock.sleep(1000);
+//            if (!testFile.exists()) {
+//                testFile.createNewFile();
+//                // Adds a line to the file
+//                BufferedWriter writer = new BufferedWriter(new FileWriter(testFile, true /*append*/));
+//                writer.write("This is a test file.");
+//                writer.close();
+//            } else {
 //
-//        }
-//        //long presses the button and it would vibrate according to morse
-//        //short press would enter the password!
+//                BufferedWriter writer = new BufferedWriter(new FileWriter(testFile, true /*append*/));
+//                writer.write("Current Vibration Interval is :" + interval + "\n");
+//                writer.write("Current Vibration Duration is :" + duration + "\n");
 //
+//                writer.close();
+//                Log.e("FilePath", getApplicationContext().getApplicationContext().getPackageName() + "/TestFile.txt");
+//            }
+//            // Refresh the data so it can seen when the device is plugged in a
+//            // computer. You may have to unplug and replug the device to see the
+//            // latest changes. This is not necessary if the user should not modify
+//            // the files.
+//            MediaScannerConnection.scanFile(this,
+//                    new String[]{testFile.toString()},
+//                    null,
+//                    null);
+//            //String filename="contacts_sid.txt";
+//            //File testFile1 = new File(Environment.getExternalStorageDirectory().getAbsolutePath(), filename);
+//            Uri path = Uri.fromFile(testFile);
+//            Log.e("FilePath",path.toString());
+//            Intent emailIntent = new Intent(Intent.ACTION_SEND);
+//// set the type to 'email'
+//            emailIntent .setType("vnd.android.cursor.dir/email");
+//            String[] to = {"roshan82@gmail.com"};
+//            emailIntent .putExtra(Intent.EXTRA_EMAIL, to);
+//// the attachment
+//            emailIntent .putExtra(Intent.EXTRA_STREAM, paths);
+//// the mail subject
+//            emailIntent .putExtra(Intent.EXTRA_SUBJECT, "Subject");
+//            startActivity(Intent.createChooser(emailIntent , "Send email..."));
+//        } catch (IOException e) {
+//            Log.e("ReadWriteFile", "Unable to write to the file."+e);
+//        }
 //    }
+
+
 
     public void processTVPress(final TextView t, final int t1) {
 
@@ -430,6 +379,9 @@ public class HABlindTutorial extends AppCompatActivity {
                     down = System.currentTimeMillis();
                     Vibrator mvibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
                     long[] pattern = new long[]{0, duration,interval};
+                    fileWriteString="This is the first time user saves the vibration interval and duration!";
+                    fileWriteString = "Duration and Interval," + String.valueOf(duration) + ","  +   String.valueOf(interval) + "Time is:," + String.valueOf(Calendar.getInstance().getTimeInMillis())+",Date is"+ HAMorseCommon.dateTime() + "\n";
+                    HAMorseCommon.writeAnswerToFile(getApplicationContext(), fileWriteString);
 
 
                     mvibrator.vibrate(pattern, -1);

@@ -143,7 +143,7 @@
         android:layout_marginStart="4dp"
         android:fontFamily="@font/oswald"
         android:gravity="center"
-        android:text="Welcome to ESM Studies"
+        android:text="Welcome to Login Method"
         android:textColor="#000000"
         android:textSize="30sp"
         app:layout_constraintEnd_toStartOf="@+id/guideline8"

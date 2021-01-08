@@ -85,26 +85,9 @@ public class dairystudy extends AppCompatActivity {
         change=(Button)findViewById(R.id.change_button);
         builder = new AlertDialog.Builder(this);
         change.setEnabled(false);
-//        t2 = new TextToSpeech(this, new TextToSpeech.OnInitListener() {
-//            @Override
-//            public void onInit(int status) {
-//                if (status == TextToSpeech.SUCCESS) {
-//                    int result = t2.setLanguage(Locale.US);
-//                    if (result == TextToSpeech.LANG_MISSING_DATA
-//                            || result == TextToSpeech.LANG_NOT_SUPPORTED) {
-//                        Log.e("TTS", "Language not supported");
-//                    } else {
-//                        //mButtonSpeak.setEnabled(true);
-//                    }
-//                } else {
-//                    Log.e("Text to Speech", "Initialization failed");
-//                }
-//            }
-//        });
 
 
 
-        //conditionTV=(TextView) findViewById(R.id.tvcondition);
 
         generateEvaluationPassword();
         retrieveItemsFromBundle();
@@ -126,45 +109,7 @@ public class dairystudy extends AppCompatActivity {
     }
 
 
-//    public void processPress(MotionEvent e, int tv) {
-//        if(e.getAction() == MotionEvent.ACTION_UP){
-//            Log.e("Touch button",String.valueOf(tv));
-//            //vibrate(numberPad[tv]);
-//        }
-//        if(e.getAction() == MotionEvent.ACTION_DOWN){
-//            Log.e("remove finger",String.valueOf(tv));
-//            mvibrator.cancel();
-//            //SystemClock.sleep(1000);
-//
-//        }
-//        if(e.getAction() == MotionEvent.ACTION_HOVER_ENTER){
-//            Log.e("HoverEnter",String.valueOf(tv));
-//            mvibrator.cancel();
-//            //SystemClock.sleep(1000);
-//
-//        }
-//        if(e.getAction() == MotionEvent.ACTION_MOVE){
-//            Log.e("Moving",String.valueOf(tv));
-//            mvibrator.cancel();
-//            //SystemClock.sleep(1000);
-//
-//        }
-//        if(e.getAction() == MotionEvent.ACTION_HOVER_MOVE){
-//            Log.e("HoverMoving",String.valueOf(tv));
-//            mvibrator.cancel();
-//            SystemClock.sleep(1000);
-//
-//        }
-//        if(e.getAction() == MotionEvent.ACTION_HOVER_EXIT){
-//            Log.e("HoverExit",String.valueOf(tv));
-//            mvibrator.cancel();
-//            //SystemClock.sleep(1000);
-//
-//        }
-//        //long presses the button and it would vibrate according to morse
-//        //short press would enter the password!
-//
-//    }
+
 
     public void processTVPress(final TextView t, final int  t1) {
         t.setOnTouchListener(new View.OnTouchListener() {
@@ -245,6 +190,7 @@ public class dairystudy extends AppCompatActivity {
 
                         .setPositiveButton("Okay!", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
+
                                 generateEvaluationPassword();
                                 pw = "";
                                 pwTV.setText(pw);
@@ -267,9 +213,14 @@ public class dairystudy extends AppCompatActivity {
                 AlertDialog alert = builder.create();
                 //Setting the title manually
                 alert.setTitle("PIN information");
+
                 alert.show();
 
-                fileWriteString = "result," + String.valueOf(evalPW) + "," + trial + "," + String.valueOf(startTime) + "," + String.valueOf(Calendar.getInstance().getTimeInMillis()) + "," + String.format("%04d", evalPW) + "," + pw + "," + HAMorseCommon.dateTime() + "\n";
+
+                fileWriteString="Selected vibration and Interval is:"+interval+","+duration;
+
+
+                fileWriteString = "Result of," +trial+ "is:Required PIN" + String.valueOf(evalPW) +"Start time was:"+ String.valueOf(startTime) + "Calender date and time:," + String.valueOf(Calendar.getInstance().getTimeInMillis()) + "Required PIN," + String.format("%04d", evalPW) + "Entered PIN," + pw + "what is this?," + HAMorseCommon.dateTime() + "\n";
                 HAMorseCommon.writeAnswerToFile(getApplicationContext(), fileWriteString);
 
 
