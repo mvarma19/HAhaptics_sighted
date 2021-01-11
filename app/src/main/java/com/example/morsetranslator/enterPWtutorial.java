@@ -44,6 +44,9 @@ public class enterPWtutorial extends AppCompatActivity {
     TextView trialTV;
     String fileWriteString = "";
 
+    int trial=1;
+
+
     int duration=HABlindTutorial.duration;
     int interval=HABlindTutorial.interval;
     Button change;
@@ -54,7 +57,7 @@ public class enterPWtutorial extends AppCompatActivity {
     int evalPW = 0;
     long startTime = 0;
     long down = 0;
-    int trial = 1;
+    //int trial = 1;
     public String pw = "";
     public int count = 0;
     AlertDialog.Builder builder;
@@ -111,45 +114,7 @@ public class enterPWtutorial extends AppCompatActivity {
     }
 
 
-//    public void processPress(MotionEvent e, int tv) {
-//        if(e.getAction() == MotionEvent.ACTION_UP){
-//            Log.e("Touch button",String.valueOf(tv));
-//            //vibrate(numberPad[tv]);
-//        }
-//        if(e.getAction() == MotionEvent.ACTION_DOWN){
-//            Log.e("remove finger",String.valueOf(tv));
-//            mvibrator.cancel();
-//            //SystemClock.sleep(1000);
-//
-//        }
-//        if(e.getAction() == MotionEvent.ACTION_HOVER_ENTER){
-//            Log.e("HoverEnter",String.valueOf(tv));
-//            mvibrator.cancel();
-//            //SystemClock.sleep(1000);
-//
-//        }
-//        if(e.getAction() == MotionEvent.ACTION_MOVE){
-//            Log.e("Moving",String.valueOf(tv));
-//            mvibrator.cancel();
-//            //SystemClock.sleep(1000);
-//
-//        }
-//        if(e.getAction() == MotionEvent.ACTION_HOVER_MOVE){
-//            Log.e("HoverMoving",String.valueOf(tv));
-//            mvibrator.cancel();
-//            SystemClock.sleep(1000);
-//
-//        }
-//        if(e.getAction() == MotionEvent.ACTION_HOVER_EXIT){
-//            Log.e("HoverExit",String.valueOf(tv));
-//            mvibrator.cancel();
-//            //SystemClock.sleep(1000);
-//
-//        }
-//        //long presses the button and it would vibrate according to morse
-//        //short press would enter the password!
-//
-//    }
+
 
     public void processTVPress(final TextView t, final int t1) {
         t.setOnTouchListener(new View.OnTouchListener() {
@@ -220,10 +185,15 @@ public class enterPWtutorial extends AppCompatActivity {
                 if (pw.equals(String.format("%04d", evalPW))) {
                     Log.e("Eval", String.valueOf(evalPW) + " CORRECT " + pw);
                     builder.setMessage("You have entered the right answer!").setTitle("PIN entry");
+
+
+
+
                     //return false;
                 } else {
                     Log.e("Eval", String.valueOf(evalPW) + " INCORRECT " + pw);
                     builder.setMessage("You have entered the wrong answer!").setTitle("PIN entry");
+
 
                 }
                 Log.e("Answers", "Empty Text lah");
@@ -241,11 +211,19 @@ public class enterPWtutorial extends AppCompatActivity {
                                 fileWriteString="Selected Vibration duration and Interval are:"+duration+","+interval;
                                 HAMorseCommon.writeAnswerToFile(getApplicationContext(), fileWriteString);
 
-                                if (trial >= 6) {
-                                    //HAMorseCommon.user = username;
-                                    addToBundleAndOpenActivity(HAMainScreen.class);
+                                if (trial >= 6 ) {
 
-                                }
+                                        addToBundleAndOpenActivity(enterPWtutorial.class);
+                                    }
+
+
+
+
+
+
+
+
+
                                 updateTV();
                                 startTime = Calendar.getInstance().getTimeInMillis();
                                 //finish();
@@ -262,24 +240,6 @@ public class enterPWtutorial extends AppCompatActivity {
 
             }
         });
-
-//                                Toast toast1 = Toast.makeText(getApplicationContext(), "Required PIN: " + String.format("%04d", evalPW) + "\nPIN you entered: " + pw, Toast.LENGTH_SHORT);
-//                                toast1.show();
-
-
-
-//        generateEvaluationPassword();
-//        pw = "";
-//        pwTV.setText(pw);
-//        //shifts=0;
-//        trial++;
-//
-//        if (trial >= 4) {
-//            //HAMorseCommon.user = username;
-//            addToBundleAndOpenActivity(dairystudy.class);
-//        }
-//        updateTV();
-//        startTime = Calendar.getInstance().getTimeInMillis();
 
 
     }
@@ -325,14 +285,16 @@ public class enterPWtutorial extends AppCompatActivity {
         public void run() {
             down = System.currentTimeMillis();
             while (touchevent) {
-                if (Math.abs(down - System.currentTimeMillis()) > 310) {
+                if (Math.abs(down - System.currentTimeMillis()) > interval) {
                     Log.d("TAG", "Thread");
                     down = System.currentTimeMillis();
-                    long[] pattern = new long[]{0, duration, interval};
-                    Log.e("Hi I am vibration:" + interval + duration, String.valueOf(pattern));
+                    fileWriteString="This is the second time user uses the saved vibration interval and duration! for practice";
+                    fileWriteString = "Duration and Interval," + String.valueOf(duration) + ","  +   String.valueOf(interval) + "Time is:," + String.valueOf(Calendar.getInstance().getTimeInMillis())+",Date is"+ HAMorseCommon.dateTime() + "\n";
+                    HAMorseCommon.writeAnswerToFile(getApplicationContext(), fileWriteString);
 
 
-                    mvibrator.vibrate(pattern, -1);
+
+                    mvibrator.vibrate(duration);
 
                     count++;
 

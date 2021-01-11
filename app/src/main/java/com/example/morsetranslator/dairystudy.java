@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.os.Vibrator;
 import android.speech.tts.TextToSpeech;
 import android.util.Log;
@@ -47,13 +48,14 @@ public class dairystudy extends AppCompatActivity {
     //String pwstore="";
     //TextView conditionTV;
     Random r = new Random();
+    long startSleep = 0;//for start sleep time
     int evalPW=0;
     long startTime=0;
     long down=0;
     int trial=0;
     public String pw="";
     public int count=0;
-     //int[] conditionArray = new int[] {1,2,3};
+    //int[] conditionArray = new int[] {1,2,3};
     //int expCondition=conditionArray[conditionIndex];
     int expCondition=HAMorseCommon.conditionArray[HAMorseCommon.conditionIndex];
     static int conditionIndex=0;
@@ -200,9 +202,18 @@ public class dairystudy extends AppCompatActivity {
                                 if (trial >= 3) {
 
                                     HAMorseCommon.conditionIndex++;
-                                     Log.e("CONDITIONS:",String.valueOf(HAMorseCommon.conditionIndex));
+                                    Log.e("CONDITIONS:",String.valueOf(HAMorseCommon.conditionIndex));
                                     HAMorseCommon.conditionIndex--;
-                                     addToBundleAndOpenActivity(Survey.class);
+                                    addToBundleAndOpenActivity(Survey.class);
+
+                                }
+                                if(expCondition==2) {
+                                    startSleep+= (new Random()).nextInt(300); //randomization
+                                    Log.d("Hi, I am condition 2,Start time is random here:",String.valueOf(startSleep));
+                                }
+                                if(expCondition==4) {
+                                    startSleep+= (new Random()).nextInt(300); //randomization
+                                    Log.d("Hi i am condition 4:Start time is random here:",String.valueOf(startSleep));
 
                                 }
                                 updateTV();
@@ -228,47 +239,7 @@ public class dairystudy extends AppCompatActivity {
             }
         });
     };
-     void condition(int condition)
-    {
-        if(condition==1)
-        {
-            long[] pattern = new long[]{0,  duration,interval};
-            mvibrator.vibrate(pattern,-1);
-            Log.e("I am condition 1",String.valueOf(condition));
-        }
-        if(condition==2)
-        {
-            Random r=new Random();
-            int randInt=(r.nextInt(100));
-            long[] pattern=new long[]{randInt, duration, interval};
-            Log.e("randInt",String.valueOf(randInt));
-            Log.e("I am condition 2",String.valueOf(condition));
-            mvibrator.vibrate(pattern,-1);
-        }
-        if(condition==3)
-        {
-            Random r=new Random();
-            int randInt=(r.nextInt(300));
-            long[] pattern=new long[]{0, duration, interval+randInt};
-            Log.e("randInt",String.valueOf(randInt));
-            Log.e("I am condition 3",String.valueOf(condition));
-            mvibrator.vibrate(pattern,-1);
 
-
-        }
-
-        if(condition==4)
-        {
-            Random r=new Random();
-            int randInt=(r.nextInt(300));
-            long[] pattern=new long[]{randInt,duration,interval+randInt};
-            Log.e("randInt",String.valueOf(randInt));
-            mvibrator.vibrate(pattern,-1);
-            Log.e("I am condition 4",String.valueOf(condition));
-
-        }
-
-    }
     void addToBundleAndOpenActivity(Class cls){
         Intent intent = new Intent(dairystudy.this, cls);
 
@@ -291,8 +262,9 @@ public class dairystudy extends AppCompatActivity {
         }
 
     }
-       private void updateTV(){
-       trialTV.setText("Trial "+String.valueOf(trial+1)+"/3 ");
+    private void updateTV(){
+        SystemClock.sleep(startSleep);
+        trialTV.setText("Trial "+String.valueOf(trial+1)+"/3 ");
         conditionTV.setText(" "+(String.valueOf(HAMorseCommon.conditionIndex+1))
                 +"/"+String.valueOf(HAMorseCommon.conditionArray.length)
                 +"("+String.valueOf(HAMorseCommon.conditionArray[HAMorseCommon.conditionIndex])+")");
@@ -305,22 +277,35 @@ public class dairystudy extends AppCompatActivity {
     class TouchVibe implements Runnable {
         @Override
         public void run() {
+            long startSleep = 0;
             down = System.currentTimeMillis();
+            //taking care og interval and start time
+            if(expCondition==3) {
+                interval+= (new Random()).nextInt(300);
+                Log.d("hi i am condition3,random interval is:", String.valueOf(interval));
+
+
+            }
+            if(expCondition==4) {
+                interval+= (new Random()).nextInt(300);
+                Log.d("hi i am condition4,random interval is:", String.valueOf(interval));
+
+
+            }
+            //taking care og interval and start time
             while (touchevent){
-                if (Math.abs(down-System.currentTimeMillis())>310){
+
+
+                if (Math.abs(down-System.currentTimeMillis())>interval){
                     Log.d("TAG", "Thread");
                     down=System.currentTimeMillis();
-                    updateTV();
-                    condition(expCondition);
+//                    updateTV();
 
 
-                    //Random r=new Random(300);
-//                    long[] pattern = new long[]{0,  HABlindTutorial.duration,HABlindTutorial.interval};
-//                    Log.e("Hi I am vibration:"+interval+duration,String.valueOf(pattern));
-//
-//
-//
-//                    mvibrator.vibrate(pattern,-1);
+                    mvibrator.vibrate(duration);
+
+
+
                     count++;
 
 
@@ -330,7 +315,8 @@ public class dairystudy extends AppCompatActivity {
                     }
                 }
             }
-            //t2.speak(String.valueOf(count),TextToSpeech.QUEUE_FLUSH,null);
+            updateTV();
+
             if (!touchevent){
                 mvibrator.cancel();
                 Log.d("PW", String.valueOf(count));

@@ -1,101 +1,88 @@
 package com.example.morsetranslator;
 
-import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.RadioButton;
-import android.widget.SeekBar;
-import android.widget.TextView;
-import android.widget.Toast;
-
-import java.util.ArrayList;
-import java.util.Calendar;
-
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
+import android.media.AudioManager;
+import android.media.ToneGenerator;
+import android.os.Bundle;
+import android.os.SystemClock;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.SeekBar;
+import android.widget.TextView;
+
+import java.util.Calendar;
+
 public class Survey extends AppCompatActivity {
-    TextView title;
-    TextView confidence;
-    SeekBar confidenceseek;
-    TextView mentaldemand;
-    SeekBar mentaldemandseek;
-    TextView mental;
-    TextView confidentno;
-    TextView confidentyes;
-    TextView mentaltv;
-    TextView mentalhigh;
-    EditText comments;
-    String[] questionsList;
 
-    public static ArrayList<String> selectedAnswers;
+    SeekBar sbMental;
+    SeekBar sbPhysical;
+    SeekBar sbTemporal;
+    SeekBar sbPerformance;
+    SeekBar sbEffort;
+    SeekBar sbFrustration;
+    SeekBar sbSecurity;
 
-    RadioButton improve_yes;
-    RadioButton improve_no;
-    RadioButton again_yes;
-    RadioButton again_no;
+    TextView tvMental;
+    TextView tvPhysical;
+    TextView tvTemporal;
+    TextView tvPerformance;
+    TextView tvEffort;
+    TextView tvFrustration;
+    TextView tvSecurity;
+
     Button bSubmit;
 
     int expCondition=HAMorseCommon.conditionArray[HAMorseCommon.conditionIndex];
     String type="qualitative";
 
 
-
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.survey);
-        title = (TextView) findViewById(R.id.title);
-        confidence = (TextView) findViewById(R.id.confidencetv);
-        confidenceseek = (SeekBar) findViewById(R.id.cofidenceseek);
-        mentaldemand = (TextView) findViewById(R.id.mentaldemand);
-        mentaldemandseek = (SeekBar) findViewById(R.id.mentaldemandseek);
-        mental = (TextView) findViewById(R.id.mentaldemand);
-        confidentyes = (TextView) findViewById(R.id.confidentyes);
-        confidentno = (TextView) findViewById(R.id.confidentno);
-        mentaltv = (TextView) findViewById(R.id.mental);
-        mentalhigh = (TextView) findViewById(R.id.mentalhigh);
-        improve_yes = (RadioButton) findViewById(R.id.improve_yes);
-        again_yes=(RadioButton)findViewById(R.id.future_yes);
-        again_no=(RadioButton)findViewById(R.id.future_no);
-        improve_no = (RadioButton) findViewById(R.id.improve_no);
+
+        sbMental=findViewById(R.id.mental);
+        sbPhysical=findViewById(R.id.physical);
+        sbTemporal=findViewById(R.id.temporal);
+        sbPerformance=findViewById(R.id.performance);
+        sbEffort=findViewById(R.id.effort);
+        sbFrustration=findViewById(R.id.frustration);
+        sbSecurity=findViewById(R.id.security);
+
+        tvMental=findViewById(R.id.mentaltv);
+        tvPhysical=findViewById(R.id.physicaltv);
+        tvTemporal=findViewById(R.id.temporaltv);
+        tvPerformance=findViewById(R.id.performancetv);
+        tvEffort=findViewById(R.id.efforttv);
+        tvFrustration=findViewById(R.id.frustrationtv);
+        tvSecurity=findViewById(R.id.securitytv);
+
         bSubmit = findViewById(R.id.submit);
-        comments=(EditText)findViewById(R.id.comments_user);
 
+        processSB(sbMental, tvMental, "Mental Demand: ");
+        processSB(sbPhysical, tvPhysical, "Physical Demand: ");
+        processSB(sbTemporal, tvTemporal, "Temporal Demand: ");
+        processSB(sbPerformance, tvPerformance, "Performance Demand: ");
+        processSB(sbEffort, tvEffort, "Effort: ");
+        processSB(sbFrustration, tvFrustration, "Frustration: ");
+        processSB(sbSecurity, tvSecurity, "Sense of Security: ");
 
-
-
-        processSB(mentaldemandseek,mentaldemand,"Mental demand:");
-        processSB(confidenceseek,confidence,"Confidence:");
 
         bSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String commentbyuser=comments.toString();
-
-                String result = "Selected option: ";
-                result+= (improve_yes.isChecked())?"Yes":(improve_no.isChecked())?"No":(again_yes.isChecked())?"Yes":(again_no.isChecked())?"No":"";
                 String fileWriteString="0QE,"+expCondition+",,"
-                        +String.valueOf(confidenceseek.getProgress())+","
-                        +String.valueOf(mentaldemandseek.getProgress())+","
-                        +commentbyuser +","
-                        +result+","
-                        
-
-
-
-
-              //  result+= (improve_yes.isChecked())?"":(improve_no.isChecked())?"":(again_yes.isChecked())?"":(again_no.isChecked())?"":""
-
-
-
-
+                        +String.valueOf(sbMental.getProgress())+","
+                        +String.valueOf(sbPhysical.getProgress())+","
+                        +String.valueOf(sbTemporal.getProgress())+","
+                        +String.valueOf(sbPerformance.getProgress())+","
+                        +String.valueOf(sbEffort.getProgress())+","
+                        +String.valueOf(sbFrustration.getProgress())+","
+                        +String.valueOf(sbSecurity.getProgress())+","
                         +String.valueOf(Calendar.getInstance().getTimeInMillis())+"\n";
-
                 HAMorseCommon.writeAnswerToFile(getApplicationContext(),fileWriteString);
                 HAMorseCommon.conditionIndex++;
                 if (HAMorseCommon.conditionIndex>=HAMorseCommon.conditionArray.length){
@@ -108,9 +95,7 @@ public class Survey extends AppCompatActivity {
         });
 
 
-
     }
-
 
 
 
@@ -137,31 +122,6 @@ public class Survey extends AppCompatActivity {
         });
 
     }
-    public void onRadioButtonClicked(View view) {
-        boolean checked = ((RadioButton) view).isChecked();
-        String str="";
-        // Check which radio button was clicked
-        switch(view.getId()) {
-            case R.id.improve_yes:
-                if(checked)
-                    str = "Yes selected";
-                break;
-            case R.id.improve_no:
-                if(checked)
-                    str = "No Selected";
-                break;
-            case R.id.future_yes:
-                if(checked)
-                    str = "Yes selected";
-                break;
-            case R.id.future_no:
-                if(checked)
-                    str = "No Selected";
-                break;
-        }
-        Toast.makeText(getApplicationContext(), str, Toast.LENGTH_SHORT).show();
-    }
-
 
     void addToBundleAndOpenActivity(Class cls){
         Intent intent = new Intent(Survey.this, cls);

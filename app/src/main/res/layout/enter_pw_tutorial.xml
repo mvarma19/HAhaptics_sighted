@@ -19,6 +19,7 @@
         android:text="hold and release to enter PIN"
         android:textSize="30sp"
         app:layout_constraintEnd_toStartOf="@+id/guideline40"
+        app:layout_constraintHorizontal_bias="0.473"
         app:layout_constraintStart_toStartOf="@+id/guideline37"
         app:layout_constraintTop_toBottomOf="@+id/testpw" />
 
@@ -33,8 +34,10 @@
 
         android:textSize="30dp"
         android:visibility="invisible"
-        tools:layout_editor_absoluteX="275dp"
-        tools:layout_editor_absoluteY="16dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.075"
+        app:layout_constraintStart_toEndOf="@+id/duration"
+        tools:layout_editor_absoluteY="34dp" />
 
     <Button
         android:id="@+id/continue_button"
@@ -48,15 +51,16 @@
         android:textSize="30dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/guideline40"
+        app:layout_constraintHorizontal_bias="0.425"
         app:layout_constraintStart_toStartOf="@+id/guideline37"
-        app:layout_constraintTop_toTopOf="@+id/guideline41"
-        app:layout_constraintVertical_bias="0.208" />
+        app:layout_constraintTop_toBottomOf="@+id/tvb"
+        app:layout_constraintVertical_bias="0.68" />
 
     <TextView
         android:id="@+id/testpw"
-        android:layout_width="379dp"
-        android:layout_height="100dp"
-        android:layout_marginTop="4dp"
+        android:layout_width="355dp"
+        android:layout_height="96dp"
+        android:layout_marginTop="12dp"
         android:gravity="center"
         android:textSize="20sp"
         app:layout_constraintEnd_toStartOf="@+id/guideline40"
@@ -72,7 +76,7 @@
         android:gravity="center"
         android:textSize="15sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline34" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/interval"
@@ -88,34 +92,36 @@
         android:id="@+id/del"
         android:layout_width="140dp"
         android:layout_height="40dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginBottom="52dp"
+        android:layout_marginStart="4dp"
         android:background="#41B3A3"
         android:fontFamily="@font/oswald"
         android:gravity="center_horizontal|center_vertical"
         android:text="DELETE"
         android:textColor="#000000"
         android:textSize="20dp"
-        app:layout_constraintStart_toStartOf="@+id/guideline37"
-        app:layout_constraintTop_toBottomOf="@+id/tvb" />
+        app:layout_constraintBottom_toTopOf="@+id/guideline41"
+        app:layout_constraintStart_toStartOf="@+id/guideline37" />
 
     <TextView
         android:id="@+id/clr"
         android:layout_width="140dp"
         android:layout_height="40dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginBottom="52dp"
+        android:layout_marginEnd="16dp"
         android:background="#41B3A3"
         android:fontFamily="@font/oswald"
         android:gravity="center_horizontal|center_vertical"
         android:text="CLEAR"
         android:textColor="#000000"
         android:textSize="20dp"
-        app:layout_constraintEnd_toStartOf="@+id/guideline40"
-        app:layout_constraintTop_toBottomOf="@+id/tvb" />
+        app:layout_constraintBottom_toTopOf="@+id/guideline41"
+        app:layout_constraintEnd_toStartOf="@+id/guideline40" />
 
     <TextView
         android:id="@+id/input"
-        android:layout_width="376dp"
-        android:layout_height="77dp"
+        android:layout_width="357dp"
+        android:layout_height="81dp"
         android:fontFamily="@font/oswald"
         android:gravity="center"
         android:hint="Enter the PIN"
@@ -124,7 +130,7 @@
         android:textSize="25sp"
         app:layout_constraintBottom_toTopOf="@+id/tvb"
         app:layout_constraintEnd_toStartOf="@+id/guideline40"
-        app:layout_constraintHorizontal_bias="0.333"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="@+id/guideline37"
         app:layout_constraintTop_toBottomOf="@+id/testpw"
         app:layout_constraintVertical_bias="0.0" />
@@ -133,20 +139,21 @@
         android:id="@+id/tvtrial"
         android:layout_width="99dp"
         android:layout_height="39dp"
+        android:layout_marginStart="4dp"
         android:gravity="left"
         android:text=""
         android:textSize="10sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@+id/guideline37"
         app:layout_constraintTop_toBottomOf="@+id/continue_button"
-        app:layout_constraintVertical_bias="0.99" />
+        app:layout_constraintVertical_bias="0.652" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline14"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:orientation="vertical"
-        app:layout_constraintGuide_begin="411dp" />
+        app:layout_constraintGuide_begin="379dp" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline34"
@@ -160,7 +167,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_begin="16dp" />
+        app:layout_constraintGuide_begin="40dp" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline40"
@@ -174,7 +181,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_begin="581dp" />
+        app:layout_constraintGuide_begin="576dp" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

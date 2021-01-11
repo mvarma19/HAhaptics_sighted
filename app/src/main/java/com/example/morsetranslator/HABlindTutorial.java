@@ -1,36 +1,38 @@
- package com.example.morsetranslator;
 
- import android.annotation.SuppressLint;
- import android.content.Context;
- import android.content.Intent;
- import android.media.MediaScannerConnection;
- import android.net.Uri;
- import android.os.Bundle;
- import android.os.Vibrator;
- import android.speech.tts.TextToSpeech;
- import android.util.Log;
- import android.view.MotionEvent;
- import android.view.View;
- import android.widget.Button;
- import android.widget.SeekBar;
- import android.widget.TextView;
- import android.widget.Toast;
 
- import com.google.android.material.snackbar.Snackbar;
+        package com.example.morsetranslator;
 
- import androidx.appcompat.app.AppCompatActivity;
- import androidx.coordinatorlayout.widget.CoordinatorLayout;
+        import android.annotation.SuppressLint;
+        import android.content.Context;
+        import android.content.Intent;
+        import android.media.MediaScannerConnection;
+        import android.net.Uri;
+        import android.os.Bundle;
+        import android.os.Vibrator;
+        import android.speech.tts.TextToSpeech;
+        import android.util.Log;
+        import android.view.MotionEvent;
+        import android.view.View;
+        import android.widget.Button;
+        import android.widget.SeekBar;
+        import android.widget.TextView;
+        import android.widget.Toast;
 
- import java.io.BufferedWriter;
- import java.io.File;
- import java.io.FileWriter;
- import java.io.IOException;
- import java.util.Calendar;
- import java.util.Locale;
+        import com.google.android.material.snackbar.Snackbar;
 
- import static androidx.core.content.FileProvider.getUriForFile;
- import static com.example.morsetranslator.HAMorseCommon.user;
- import static java.lang.String.valueOf;
+        import androidx.appcompat.app.AppCompatActivity;
+        import androidx.coordinatorlayout.widget.CoordinatorLayout;
+
+        import java.io.BufferedWriter;
+        import java.io.File;
+        import java.io.FileWriter;
+        import java.io.IOException;
+        import java.util.Calendar;
+        import java.util.Locale;
+
+        import static androidx.core.content.FileProvider.getUriForFile;
+        import static com.example.morsetranslator.HAMorseCommon.user;
+        import static java.lang.String.valueOf;
 
 //import static com.example.morsetranslator.HAMorseCommon.timeunit;
 
@@ -60,7 +62,7 @@ public class HABlindTutorial extends AppCompatActivity {
     static int duration=10;
     String fileWriteString = "";
     String username;
-   Bundle bundle;
+    Bundle bundle;
     static int interval=100;
     TextView tv_vduration;
     @Override
@@ -374,17 +376,17 @@ public class HABlindTutorial extends AppCompatActivity {
         public void run() {
             down = System.currentTimeMillis();
             while (touchevent) {
-                if (Math.abs(down - System.currentTimeMillis()) > 310) {
+                if (Math.abs(down - System.currentTimeMillis()) > interval) {
                     Log.d("TAG", "Thread");
                     down = System.currentTimeMillis();
                     Vibrator mvibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-                    long[] pattern = new long[]{0, duration,interval};
+
                     fileWriteString="This is the first time user saves the vibration interval and duration!";
-                    fileWriteString = "Duration and Interval," + String.valueOf(duration) + ","  +   String.valueOf(interval) + "Time is:," + String.valueOf(Calendar.getInstance().getTimeInMillis())+",Date is"+ HAMorseCommon.dateTime() + "\n";
+                    fileWriteString = "Duration and Interval," + valueOf(duration) + ","  +   valueOf(interval) + "Time is:," + valueOf(Calendar.getInstance().getTimeInMillis())+",Date is"+ HAMorseCommon.dateTime() + "\n";
                     HAMorseCommon.writeAnswerToFile(getApplicationContext(), fileWriteString);
 
 
-                    mvibrator.vibrate(pattern, -1);
+                    mvibrator.vibrate(duration);
 
 
                     count++;
@@ -395,14 +397,14 @@ public class HABlindTutorial extends AppCompatActivity {
             }
 
 
-                if (!touchevent) {
+            if (!touchevent) {
 
-                    mvibrator.cancel();
-                    Log.d("PW", valueOf(count));
-                    pw = pw + count;
-                    pwTV.setText(pw);
-                    count = 0;
-                }
+                mvibrator.cancel();
+                Log.d("PW", valueOf(count));
+                pw = pw + count;
+                pwTV.setText(pw);
+                count = 0;
+            }
 
 
 
