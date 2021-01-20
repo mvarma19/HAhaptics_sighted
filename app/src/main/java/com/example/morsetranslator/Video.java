@@ -21,9 +21,8 @@ import java.util.Calendar;
 import java.util.Random;
 
 import static com.example.morsetranslator.HAMorseCommon.user;
-import static java.lang.Thread.*;
 
-public class dairystudy extends AppCompatActivity {
+public class Video extends AppCompatActivity {
 
     Vibrator mvibrator;
     Bundle bundle;
@@ -49,7 +48,7 @@ public class dairystudy extends AppCompatActivity {
     //String pwstore="";
     //TextView conditionTV;
     Random r = new Random();
-    static long startSleep = 0;//for start sleep time
+    long startSleep = 0;//for start sleep time
     int evalPW=0;
     long startTime=0;
     long down=0;
@@ -64,7 +63,7 @@ public class dairystudy extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.dairy);
+        setContentView(R.layout.video);
         mvibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
         bundle=getIntent().getExtras();
         retrieveItemsFromBundle();
@@ -108,7 +107,7 @@ public class dairystudy extends AppCompatActivity {
 
     private void generateEvaluationPassword(){
         evalPW=r.nextInt(9999);
-        testPWtv.setText("Please Enter the PIN: "+String.format("%04d", evalPW));
+        //testPWtv.setText("Please Enter the PIN: "+String.format("%04d", evalPW));
     }
 
 
@@ -124,7 +123,6 @@ public class dairystudy extends AppCompatActivity {
                         Log.e("Tag","I am here!!");
                         if (t1==0) {
                             touchevent = true;
-
                             new Thread(new TouchVibe()).start();
                         }
 
@@ -154,41 +152,31 @@ public class dairystudy extends AppCompatActivity {
                             pw="";
                             pwTV.setText(pw);
                         }
-//
+//                        if (t1==3){
+//                            //HAMorseCommon.writeAnswerToFile(getApplicationContext(),"fromTouchMorse");
+//                            HAMorseCommon.sendEmail(dairystudy.this);
+//                        }
+//                        long diff = System.currentTimeMillis() - down;
+//                        Log.d("time is",String.valueOf(diff));
+//                        long standard = 300L;
+//                        if(diff>standard)
+//                            break;
+//                        store += t.getText();
+//                        input.setText(store);
+//                        //enter.performClick();
+//                        //isMoving=false;
                         break;
                 }
 
                 return true;
-
+//                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+//
+//                    store += t.getText();
+//                    input.setText(store);
+//                }
+                //return false;
             }
         });
-        if(expCondition==2) {
-            startSleep+= (new Random()).nextInt(100); //randomization
-
-
-
-
-            Log.d("Hi, I am condition 2,Start time is random here:",String.valueOf(startSleep));
-
-        }
-        if(expCondition==4) {
-            startSleep+= (new Random()).nextInt(100); //randomization
-
-            Log.d("Hi i am condition 4:Start time is random here:",String.valueOf(startSleep));
-
-        }
-        if(expCondition==3) {
-            interval+= (new Random()).nextInt(100);
-            Log.d("hi i am condition3,random interval is:", String.valueOf(interval));
-
-
-        }
-        if(expCondition==4) {
-            interval+= (new Random()).nextInt(100);
-            Log.d("hi i am condition4,random interval is:", String.valueOf(interval));
-
-
-        }
 
         continue_trial.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -200,7 +188,7 @@ public class dairystudy extends AppCompatActivity {
                     Log.e("Eval", String.valueOf(evalPW) + " INCORRECT " + pw);
                 }
                 Log.e("Answers", "Empty Text lah");
-                builder.setMessage("Required PIN: " + String.format("%04d", evalPW) + "\nPIN you entered: " + pw)
+                builder.setMessage("Required PIN: 3601" + "\nPIN you entered: 3601")
 
                         .setPositiveButton("Okay!", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
@@ -219,16 +207,22 @@ public class dairystudy extends AppCompatActivity {
                                     addToBundleAndOpenActivity(Survey.class);
 
                                 }
+                                if(expCondition==2) {
+                                    startSleep+= (new Random()).nextInt(300); //randomization
+                                    Log.d("Hi, I am condition 2,Start time is random here:",String.valueOf(startSleep));
+                                }
+                                if(expCondition==4) {
+                                    startSleep+= (new Random()).nextInt(300); //randomization
+                                    Log.d("Hi i am condition 4:Start time is random here:",String.valueOf(startSleep));
 
-
-                                    updateTV();
-
+                                }
+                                updateTV();
                                 startTime = Calendar.getInstance().getTimeInMillis();
 
                             }
                         });
                 AlertDialog alert = builder.create();
-                //Setting the title manually
+
                 alert.setTitle("PIN information");
 
                 alert.show();
@@ -237,8 +231,7 @@ public class dairystudy extends AppCompatActivity {
                 fileWriteString="Selected vibration and Interval is:"+interval+","+duration;
 
 
-
-                fileWriteString = "Result of," +trial+","+expCondition+ "is:Required PIN" + String.valueOf(evalPW) +"Start time was:"+ String.valueOf(startTime) + "Calender date and time:," + String.valueOf(Calendar.getInstance().getTimeInMillis()) + "Required PIN," + String.format("%04d", evalPW) + "Entered PIN," + pw + "what is this?," + HAMorseCommon.dateTime() + "\n";
+                fileWriteString = "Result of," +trial+ "is:Required PIN" + String.valueOf(evalPW) +"Start time was:"+ String.valueOf(startTime) + "Calender date and time:," + String.valueOf(Calendar.getInstance().getTimeInMillis()) + "Required PIN," + String.format("%04d", evalPW) + "Entered PIN," + pw + "what is this?," + HAMorseCommon.dateTime() + "\n";
                 HAMorseCommon.writeAnswerToFile(getApplicationContext(), fileWriteString);
 
 
@@ -248,7 +241,7 @@ public class dairystudy extends AppCompatActivity {
     };
 
     void addToBundleAndOpenActivity(Class cls){
-        Intent intent = new Intent(dairystudy.this, cls);
+        Intent intent = new Intent(Video.this, cls);
 
         Bundle bundle=new Bundle();
 
@@ -269,11 +262,8 @@ public class dairystudy extends AppCompatActivity {
         }
 
     }
-    private void updateTV()  {
+    private void updateTV(){
         SystemClock.sleep(startSleep);
-        Log.e("system has slept for:",String.valueOf(startSleep));
-
-
         trialTV.setText("Trial "+String.valueOf(trial+1)+"/3 ");
         conditionTV.setText(" "+(String.valueOf(HAMorseCommon.conditionIndex+1))
                 +"/"+String.valueOf(HAMorseCommon.conditionArray.length)
@@ -287,25 +277,29 @@ public class dairystudy extends AppCompatActivity {
     class TouchVibe implements Runnable {
         @Override
         public void run() {
-
+            long startSleep = 0;
             down = System.currentTimeMillis();
+            //taking care og interval and start time
+            if(expCondition==3) {
+                interval+= (new Random()).nextInt(300);
+                Log.d("hi i am condition3,random interval is:", String.valueOf(interval));
 
 
+            }
+            if(expCondition==4) {
+                interval+= (new Random()).nextInt(300);
+                Log.d("hi i am condition4,random interval is:", String.valueOf(interval));
 
+
+            }
+            //taking care og interval and start time
             while (touchevent){
 
 
-
-                if (Math.abs(down-System.currentTimeMillis())>interval && Math.abs(down-System.currentTimeMillis())>startSleep
-                ) {
-
-
-
-
-                    Log.d(" and interval ", String.valueOf(interval));
-
+                if (Math.abs(down-System.currentTimeMillis())>interval){
+                    Log.d("TAG", "Thread");
                     down=System.currentTimeMillis();
-
+//                    updateTV();
 
 
                     mvibrator.vibrate(duration);
@@ -321,16 +315,7 @@ public class dairystudy extends AppCompatActivity {
                     }
                 }
             }
-
-                updateTV();
-
-
-
-
-
-
-
-
+            updateTV();
 
             if (!touchevent){
                 mvibrator.cancel();

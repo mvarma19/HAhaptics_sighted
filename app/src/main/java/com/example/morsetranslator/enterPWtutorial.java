@@ -3,6 +3,7 @@ package com.example.morsetranslator;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.speech.tts.TextToSpeech;
@@ -24,8 +25,7 @@ import java.util.Random;
 //import static com.example.morsetranslator.HABlindTutorial.duration;
 
 import static com.example.morsetranslator.HAMorseCommon.user;
-
-
+import static java.util.jar.Pack200.Unpacker.PROGRESS;
 
 
 public class enterPWtutorial extends AppCompatActivity {
@@ -43,6 +43,7 @@ public class enterPWtutorial extends AppCompatActivity {
     TextView testPWtv;
     TextView trialTV;
     String fileWriteString = "";
+
 
     int trial=1;
 
@@ -209,11 +210,13 @@ public class enterPWtutorial extends AppCompatActivity {
                                 updateTV();
                                 fileWriteString = "Practise PIN," + String.valueOf(evalPW) + "," + trial + "Start is time:," + String.valueOf(startTime) + "Today's date with seconds," + String.valueOf(Calendar.getInstance().getTimeInMillis()) + "PIN required," + String.format("%04d", evalPW) + "PIN entered:," + pw + " Date:," + HAMorseCommon.dateTime() + "\n";
                                 fileWriteString="Selected Vibration duration and Interval are:"+duration+","+interval;
+
                                 HAMorseCommon.writeAnswerToFile(getApplicationContext(), fileWriteString);
 
                                 if (trial >= 6 ) {
 
-                                        addToBundleAndOpenActivity(enterPWtutorial.class);
+
+                                        addToBundleAndOpenActivity(HAMainScreen.class);
                                     }
 
 

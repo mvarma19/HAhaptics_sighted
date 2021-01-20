@@ -5,10 +5,10 @@
         import android.annotation.SuppressLint;
         import android.content.Context;
         import android.content.Intent;
-        import android.media.MediaScannerConnection;
-        import android.net.Uri;
+        import android.content.SharedPreferences;
         import android.os.Bundle;
         import android.os.Vibrator;
+        import android.preference.PreferenceManager;
         import android.speech.tts.TextToSpeech;
         import android.util.Log;
         import android.view.MotionEvent;
@@ -16,21 +16,13 @@
         import android.widget.Button;
         import android.widget.SeekBar;
         import android.widget.TextView;
-        import android.widget.Toast;
-
-        import com.google.android.material.snackbar.Snackbar;
 
         import androidx.appcompat.app.AppCompatActivity;
         import androidx.coordinatorlayout.widget.CoordinatorLayout;
 
-        import java.io.BufferedWriter;
-        import java.io.File;
-        import java.io.FileWriter;
-        import java.io.IOException;
         import java.util.Calendar;
-        import java.util.Locale;
 
-        import static androidx.core.content.FileProvider.getUriForFile;
+        import static android.app.PendingIntent.getActivity;
         import static com.example.morsetranslator.HAMorseCommon.user;
         import static java.lang.String.valueOf;
 
@@ -41,6 +33,11 @@ public class HABlindTutorial extends AppCompatActivity {
     Vibrator mvibrator;
     SeekBar seekBar_vinterval;
     SeekBar seekBar_vduration;
+    private  SharedPreferences preferences;
+
+    private static final String PROGRESS="SEEKBAR";
+
+
     Button tv;
     private CoordinatorLayout coordinatorLayout;
     TextView pwTV;
@@ -63,14 +60,22 @@ public class HABlindTutorial extends AppCompatActivity {
     String fileWriteString = "";
     String username;
     Bundle bundle;
+    static int currentProgress;
+    static int newProgressValue;
+
+
+
     static int interval=100;
     TextView tv_vduration;
+    public static final String durationseek = "durationseek";
+    public static final String intervalseek = "intervalseek";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.ha_blind_tutorial);
         mvibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
         initializeVariables();
+
         retrieveItemsFromBundle();
         continue_tutorial = (Button) findViewById(R.id.continue_button);
         continue_tutorial.setOnClickListener(new View.OnClickListener() {
@@ -97,7 +102,20 @@ public class HABlindTutorial extends AppCompatActivity {
 //            }
 //        });
 
-//        tv_vduration.setText("Vibration Duration: 0/100");
+
+//        preferences=getSharedPreferences(" ",MODE_PRIVATE);
+//        final SharedPreferences.Editor editor=preferences.edit();
+//
+//        seekBar_vduration.setProgress(preferences.getInt(PROGRESS,0));
+//        preferences1=getSharedPreferences(" ",MODE_PRIVATE);
+//        final SharedPreferences.Editor editor1=preferences1.edit();
+//        seekBar_vinterval.setProgress(preferences1.getInt(PROGRESS1,0));
+        preferences = getSharedPreferences(PROGRESS , Context.MODE_PRIVATE);
+        currentProgress = preferences.getInt(PROGRESS, 0);
+
+
+        tv_vduration.setText("Vibration Duration:"+seekBar_vduration.getProgress()+"/"+seekBar_vduration.getMax());
+        tv_vinterval.setText("Vibration Interval:"+seekBar_vinterval.getProgress()+"/"+seekBar_vinterval.getMax());
 
         seekBar_vduration.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             final int seek = 10;
@@ -109,6 +127,8 @@ public class HABlindTutorial extends AppCompatActivity {
                 tv_vduration.setText("Vibration Duration:" + seekBar.getProgress() + "/" + seekBar.getMax());
                 progress = ((int) Math.round(progress / yourStep)) * yourStep;
                 seekBar.setProgress(progress);
+
+                //seekBar_vduration.setProgress(preferences1.getInt(PROGRESS1,progress));
                 //Toast.makeText(getApplicationContext(), valueOf(progress), Toast.LENGTH_SHORT).show();
 
                 duration = seekBar.getProgress();
@@ -133,24 +153,43 @@ public class HABlindTutorial extends AppCompatActivity {
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
                 mvibrator.vibrate(100);
+                tv_vduration.setText("Vibration Duration:" + seekBar.getProgress() + "/" + seekBar.getMax());
+//                editor1.putInt(PROGRESS,seekBar.getProgress());
+//                editor1.commit();
+                 newProgressValue = seekBar.getProgress();
+                currentProgress = newProgressValue ;
+                SharedPreferences.Editor editor = preferences.edit();
+                editor.putInt(PROGRESS, currentProgress).apply();
+                editor.commit();
+
+
+
+
+
 
 
             }
+
         });
+
+
 
         seekBar_vinterval.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             final int seek = 0;
             final int yourStep = 100;
 
+
             @Override
             public void onProgressChanged(SeekBar seekBar, int progresValue, boolean fromUser) {
                 tv_vinterval.setText("Vibration Interval:" + seekBar.getProgress() + "/" + seekBar.getMax());
                 progresValue = ((int) Math.round(progresValue / yourStep)) * yourStep;
-                seekBar.setProgress(progresValue);
+               seekBar.setProgress(progresValue);
+                //seekBar.setProgress(preferences.getInt(PROGRESS,0));
                 //Toast.makeText(getApplicationContext(), valueOf(progresValue), Toast.LENGTH_SHORT).show();
 //                Snackbar snackbar = Snackbar.make(seekBar,valueOf(progresValue), Snackbar.LENGTH_SHORT);
 //                snackbar.show();
                 interval = seekBar.getProgress();
+
 
                 //t2.speak("Vibration Interval Changed to:"+String.valueOf(interval),TextToSpeech.QUEUE_FLUSH,null);
 
@@ -171,6 +210,12 @@ public class HABlindTutorial extends AppCompatActivity {
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
                 mvibrator.vibrate(100);
+                tv_vinterval.setText("Vibration Interval:" + seekBar.getProgress() + "/" + seekBar.getMax());
+//                editor.putInt(PROGRESS,seekBar.getProgress());
+//                editor.commit();
+
+
+
 
             }
         });
@@ -208,6 +253,8 @@ public class HABlindTutorial extends AppCompatActivity {
         bundle.putString("userName", user);
         bundle.putInt("duration",duration);
         bundle.putInt("interval",interval);
+
+
         intent.putExtras(bundle);
         startActivity(intent);
         Log.e("SentBundle", valueOf(bundle));
@@ -219,6 +266,7 @@ public class HABlindTutorial extends AppCompatActivity {
             duration=bundle.getInt("duration");
             interval=bundle.getInt("interval");
 
+
         }
     }
 
@@ -228,6 +276,7 @@ public class HABlindTutorial extends AppCompatActivity {
         tv_vinterval = (TextView) findViewById(R.id.vibration_interval);
         seekBar_vduration=(SeekBar)findViewById(R.id.vibration_durationseekbar);
         tv_vduration=(TextView)findViewById(R.id.vibrationintervaltv);
+
 
     }
 //    public void fileSaving(){
