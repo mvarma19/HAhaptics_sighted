@@ -10,6 +10,11 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <supports-screens android:smallScreens="true"
+        android:normalScreens="true"
+        android:largeScreens="true"
+        android:xlargeScreens="true"
+        android:anyDensity="true" />
 
 
     <application
@@ -23,6 +28,8 @@
 
 
         <activity android:name=".dairystudy" />
+        <activity android:name=".Video" />
+
 
         <activity android:name=".HABlindTutorial"/>
         <activity android:name=".enterPWtutorial"/>

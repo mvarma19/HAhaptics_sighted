@@ -57,6 +57,7 @@
         app:layout_constraintVertical_bias="0.488" />
 
     <SeekBar
+        android:accessibilityLiveRegion="assertive"
         android:id="@+id/vibration_durationseekbar"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -73,6 +74,7 @@
         app:layout_constraintTop_toTopOf="@+id/guideline52" />
 
     <SeekBar
+        android:accessibilityLiveRegion="assertive"
         android:id="@+id/vibration_intervalseekbar"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -159,7 +161,7 @@
 
         android:layout_marginTop="4dp"
         android:fontFamily="@font/oswald"
-        android:text="Vibration Duration:10/100"
+        android:text="Vibration Duration:"
         android:textAlignment="center"
         android:textColor="#000000"
         android:textSize="20dp"

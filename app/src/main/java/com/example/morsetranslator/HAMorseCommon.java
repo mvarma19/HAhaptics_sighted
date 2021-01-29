@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.media.MediaScannerConnection;
 import android.net.Uri;
+import android.os.SystemClock;
 import android.util.Log;
 
 import java.io.BufferedWriter;
@@ -29,6 +30,7 @@ public class HAMorseCommon {
     static Context context;
     static private Uri paths;
     static boolean randomized=false;
+    static long startSleep=dairystudy.startSleep;
 
 
     public static void writeAnswerToFile(Context cntx, String textToWrite){
