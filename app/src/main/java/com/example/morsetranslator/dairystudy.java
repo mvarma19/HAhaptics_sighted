@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.os.Vibrator;
 import android.speech.tts.TextToSpeech;
 import android.util.Log;
@@ -17,9 +18,11 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.Calendar;
+import java.util.Locale;
 import java.util.Random;
 
 import static com.example.morsetranslator.HAMorseCommon.user;
+import static java.lang.Thread.*;
 
 public class dairystudy extends AppCompatActivity {
 
@@ -32,6 +35,7 @@ public class dairystudy extends AppCompatActivity {
     TextView conditionTV;
     Button continue_trial;
     //TextView enterTV;
+    TextView diary;
     TextView duration_tv;
     TextView interval_tv;
     TextView testPWtv;
@@ -47,14 +51,14 @@ public class dairystudy extends AppCompatActivity {
     //String pwstore="";
     //TextView conditionTV;
     Random r = new Random();
+    static long startSleep = 0;//for start sleep time
     int evalPW=0;
     long startTime=0;
     long down=0;
     int trial=0;
     public String pw="";
     public int count=0;
-     //int[] conditionArray = new int[] {1,2,3};
-    //int expCondition=conditionArray[conditionIndex];
+
     int expCondition=HAMorseCommon.conditionArray[HAMorseCommon.conditionIndex];
     static int conditionIndex=0;
     public boolean touchevent=false;
@@ -67,6 +71,8 @@ public class dairystudy extends AppCompatActivity {
         retrieveItemsFromBundle();
 
         tv = (Button) findViewById(R.id.tvb);
+        diary=(TextView)findViewById(R.id.ds);
+
         testPWtv=(TextView) findViewById(R.id.testpw);
 
         pwTV=(TextView) findViewById(R.id.input);
@@ -80,31 +86,71 @@ public class dairystudy extends AppCompatActivity {
         interval_tv=(TextView)findViewById(R.id.interval);
         conditionTV=(TextView) findViewById(R.id.tvcondition);
 
+
         duration_tv.setText("Vibration Duration: "+String.valueOf(duration)+"/100");
         interval_tv.setText("Vibration Interval: "+String.valueOf(interval)+"/400");
         change=(Button)findViewById(R.id.change_button);
         builder = new AlertDialog.Builder(this);
         change.setEnabled(false);
-//        t2 = new TextToSpeech(this, new TextToSpeech.OnInitListener() {
-//            @Override
-//            public void onInit(int status) {
-//                if (status == TextToSpeech.SUCCESS) {
-//                    int result = t2.setLanguage(Locale.US);
-//                    if (result == TextToSpeech.LANG_MISSING_DATA
-//                            || result == TextToSpeech.LANG_NOT_SUPPORTED) {
-//                        Log.e("TTS", "Language not supported");
-//                    } else {
-//                        //mButtonSpeak.setEnabled(true);
-//                    }
-//                } else {
-//                    Log.e("Text to Speech", "Initialization failed");
-//                }
-//            }
-//        });
+        t2 = new TextToSpeech(this, new TextToSpeech.OnInitListener() {
+            @Override
+            public void onInit(int status) {
+                if (status == TextToSpeech.SUCCESS) {
+                    int result = t2.setLanguage(Locale.US);
+                    if (result == TextToSpeech.LANG_MISSING_DATA
+                            || result == TextToSpeech.LANG_NOT_SUPPORTED) {
+                        Log.e("TTS", "Language not supported");
+                    } else {
+                        //mButtonSpeak.setEnabled(true);
+                    }
+                } else {
+                    Log.e("Text to Speech", "Initialization failed");
+                }
+            }
+        });
 
 
 
-        //conditionTV=(TextView) findViewById(R.id.tvcondition);
+
+
+diary.setOnTouchListener(new View.OnTouchListener() {
+    @Override
+    public boolean onTouch(View v, MotionEvent event) {
+        t2.speak("Welcome to ESM studies",TextToSpeech.QUEUE_FLUSH,null);
+        return false;
+    }
+});
+duration_tv.setOnTouchListener(new View.OnTouchListener() {
+    @Override
+    public boolean onTouch(View v, MotionEvent event) {
+        t2.speak("Vibration Duration:"+String.valueOf(duration)+"/100",TextToSpeech.QUEUE_FLUSH,null);
+
+        return false;
+    }
+});
+interval_tv.setOnTouchListener(new View.OnTouchListener() {
+    @Override
+    public boolean onTouch(View v, MotionEvent event) {
+        t2.speak("Vibration Interval: "+String.valueOf(interval)+"/400",TextToSpeech.QUEUE_FLUSH,null);
+
+        return false;
+    }
+});
+        testPWtv.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                t2.speak("Please ENter the pin"+String.format("%04d",evalPW),TextToSpeech.QUEUE_FLUSH,null);
+                return true;
+            }
+        });
+        pwTV.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                t2.speak("Enter the PIN",TextToSpeech.QUEUE_FLUSH,null);
+                return false;
+            }
+        });
+
 
         generateEvaluationPassword();
         retrieveItemsFromBundle();
@@ -116,6 +162,7 @@ public class dairystudy extends AppCompatActivity {
         //processTVPress(enterTV,3);
 
     }
+
     //final GestureDetector gdt = new GestureDetector(new enterPWtutorial());
 
 
@@ -126,45 +173,8 @@ public class dairystudy extends AppCompatActivity {
     }
 
 
-//    public void processPress(MotionEvent e, int tv) {
-//        if(e.getAction() == MotionEvent.ACTION_UP){
-//            Log.e("Touch button",String.valueOf(tv));
-//            //vibrate(numberPad[tv]);
-//        }
-//        if(e.getAction() == MotionEvent.ACTION_DOWN){
-//            Log.e("remove finger",String.valueOf(tv));
-//            mvibrator.cancel();
-//            //SystemClock.sleep(1000);
-//
-//        }
-//        if(e.getAction() == MotionEvent.ACTION_HOVER_ENTER){
-//            Log.e("HoverEnter",String.valueOf(tv));
-//            mvibrator.cancel();
-//            //SystemClock.sleep(1000);
-//
-//        }
-//        if(e.getAction() == MotionEvent.ACTION_MOVE){
-//            Log.e("Moving",String.valueOf(tv));
-//            mvibrator.cancel();
-//            //SystemClock.sleep(1000);
-//
-//        }
-//        if(e.getAction() == MotionEvent.ACTION_HOVER_MOVE){
-//            Log.e("HoverMoving",String.valueOf(tv));
-//            mvibrator.cancel();
-//            SystemClock.sleep(1000);
-//
-//        }
-//        if(e.getAction() == MotionEvent.ACTION_HOVER_EXIT){
-//            Log.e("HoverExit",String.valueOf(tv));
-//            mvibrator.cancel();
-//            //SystemClock.sleep(1000);
-//
-//        }
-//        //long presses the button and it would vibrate according to morse
-//        //short press would enter the password!
-//
-//    }
+
+
 
     public void processTVPress(final TextView t, final int  t1) {
         t.setOnTouchListener(new View.OnTouchListener() {
@@ -176,6 +186,7 @@ public class dairystudy extends AppCompatActivity {
                         Log.e("Tag","I am here!!");
                         if (t1==0) {
                             touchevent = true;
+
                             new Thread(new TouchVibe()).start();
                         }
 
@@ -205,31 +216,41 @@ public class dairystudy extends AppCompatActivity {
                             pw="";
                             pwTV.setText(pw);
                         }
-//                        if (t1==3){
-//                            //HAMorseCommon.writeAnswerToFile(getApplicationContext(),"fromTouchMorse");
-//                            HAMorseCommon.sendEmail(dairystudy.this);
-//                        }
-//                        long diff = System.currentTimeMillis() - down;
-//                        Log.d("time is",String.valueOf(diff));
-//                        long standard = 300L;
-//                        if(diff>standard)
-//                            break;
-//                        store += t.getText();
-//                        input.setText(store);
-//                        //enter.performClick();
-//                        //isMoving=false;
+//
                         break;
                 }
 
                 return true;
-//                if (event.getAction() == MotionEvent.ACTION_DOWN) {
-//
-//                    store += t.getText();
-//                    input.setText(store);
-//                }
-                //return false;
+
             }
         });
+        if(expCondition==2) {
+            startSleep+= (new Random()).nextInt(100); //randomization
+
+
+
+
+            Log.d("Hi, I am condition 2,Start time is random here:",String.valueOf(startSleep));
+
+        }
+        if(expCondition==4) {
+            startSleep+= (new Random()).nextInt(100); //randomization
+
+            Log.d("Hi i am condition 4:Start time is random here:",String.valueOf(startSleep));
+
+        }
+        if(expCondition==3) {
+            interval+= (new Random()).nextInt(100);
+            Log.d("hi i am condition3,random interval is:", String.valueOf(interval));
+
+
+        }
+        if(expCondition==4) {
+            interval+= (new Random()).nextInt(100);
+            Log.d("hi i am condition4,random interval is:", String.valueOf(interval));
+
+
+        }
 
         continue_trial.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -245,6 +266,7 @@ public class dairystudy extends AppCompatActivity {
 
                         .setPositiveButton("Okay!", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
+
                                 generateEvaluationPassword();
                                 pw = "";
                                 pwTV.setText(pw);
@@ -254,12 +276,15 @@ public class dairystudy extends AppCompatActivity {
                                 if (trial >= 3) {
 
                                     HAMorseCommon.conditionIndex++;
-                                     Log.e("CONDITIONS:",String.valueOf(HAMorseCommon.conditionIndex));
+                                    Log.e("CONDITIONS:",String.valueOf(HAMorseCommon.conditionIndex));
                                     HAMorseCommon.conditionIndex--;
-                                     addToBundleAndOpenActivity(Survey.class);
+                                    addToBundleAndOpenActivity(Survey.class);
 
                                 }
+
+
                                 updateTV();
+
                                 startTime = Calendar.getInstance().getTimeInMillis();
 
                             }
@@ -267,9 +292,15 @@ public class dairystudy extends AppCompatActivity {
                 AlertDialog alert = builder.create();
                 //Setting the title manually
                 alert.setTitle("PIN information");
+
                 alert.show();
 
-                fileWriteString = "result," + String.valueOf(evalPW) + "," + trial + "," + String.valueOf(startTime) + "," + String.valueOf(Calendar.getInstance().getTimeInMillis()) + "," + String.format("%04d", evalPW) + "," + pw + "," + HAMorseCommon.dateTime() + "\n";
+
+                fileWriteString="Selected vibration and Interval is:"+interval+","+duration;
+
+
+
+                fileWriteString = "Result of," +trial+","+expCondition+ "is:Required PIN" + String.valueOf(evalPW) +"Start time was:"+ String.valueOf(startTime) + "Calender date and time:," + String.valueOf(Calendar.getInstance().getTimeInMillis()) + "Required PIN," + String.format("%04d", evalPW) + "Entered PIN," + pw + "Date:," + HAMorseCommon.dateTime() + "\n";
                 HAMorseCommon.writeAnswerToFile(getApplicationContext(), fileWriteString);
 
 
@@ -277,47 +308,7 @@ public class dairystudy extends AppCompatActivity {
             }
         });
     };
-     void condition(int condition)
-    {
-        if(condition==1)
-        {
-            long[] pattern = new long[]{0,  duration,interval};
-            mvibrator.vibrate(pattern,-1);
-            Log.e("I am condition 1",String.valueOf(condition));
-        }
-        if(condition==2)
-        {
-            Random r=new Random();
-            int randInt=(r.nextInt(100));
-            long[] pattern=new long[]{randInt, duration, interval};
-            Log.e("randInt",String.valueOf(randInt));
-            Log.e("I am condition 2",String.valueOf(condition));
-            mvibrator.vibrate(pattern,-1);
-        }
-        if(condition==3)
-        {
-            Random r=new Random();
-            int randInt=(r.nextInt(300));
-            long[] pattern=new long[]{0, duration, interval+randInt};
-            Log.e("randInt",String.valueOf(randInt));
-            Log.e("I am condition 3",String.valueOf(condition));
-            mvibrator.vibrate(pattern,-1);
 
-
-        }
-
-        if(condition==4)
-        {
-            Random r=new Random();
-            int randInt=(r.nextInt(300));
-            long[] pattern=new long[]{randInt,duration,interval+randInt};
-            Log.e("randInt",String.valueOf(randInt));
-            mvibrator.vibrate(pattern,-1);
-            Log.e("I am condition 4",String.valueOf(condition));
-
-        }
-
-    }
     void addToBundleAndOpenActivity(Class cls){
         Intent intent = new Intent(dairystudy.this, cls);
 
@@ -340,8 +331,12 @@ public class dairystudy extends AppCompatActivity {
         }
 
     }
-       private void updateTV(){
-       trialTV.setText("Trial "+String.valueOf(trial+1)+"/3 ");
+    private void updateTV()  {
+        SystemClock.sleep(startSleep);
+        Log.e("system has slept for:",String.valueOf(startSleep));
+
+
+        trialTV.setText("Trial "+String.valueOf(trial+1)+"/3 ");
         conditionTV.setText(" "+(String.valueOf(HAMorseCommon.conditionIndex+1))
                 +"/"+String.valueOf(HAMorseCommon.conditionArray.length)
                 +"("+String.valueOf(HAMorseCommon.conditionArray[HAMorseCommon.conditionIndex])+")");
@@ -354,22 +349,30 @@ public class dairystudy extends AppCompatActivity {
     class TouchVibe implements Runnable {
         @Override
         public void run() {
+
             down = System.currentTimeMillis();
+
+
+
             while (touchevent){
-                if (Math.abs(down-System.currentTimeMillis())>310){
-                    Log.d("TAG", "Thread");
+
+
+
+                if (Math.abs(down-System.currentTimeMillis())>interval && Math.abs(down-System.currentTimeMillis())>startSleep) {
+
+
+
+
+                    Log.d(" and interval ", String.valueOf(interval));
+
                     down=System.currentTimeMillis();
-                    updateTV();
-                    condition(expCondition);
 
 
-                    //Random r=new Random(300);
-//                    long[] pattern = new long[]{0,  HABlindTutorial.duration,HABlindTutorial.interval};
-//                    Log.e("Hi I am vibration:"+interval+duration,String.valueOf(pattern));
-//
-//
-//
-//                    mvibrator.vibrate(pattern,-1);
+
+                    mvibrator.vibrate(duration);
+
+
+
                     count++;
 
 
@@ -379,7 +382,18 @@ public class dairystudy extends AppCompatActivity {
                     }
                 }
             }
-            //t2.speak(String.valueOf(count),TextToSpeech.QUEUE_FLUSH,null);
+
+
+            updateTV();
+
+
+
+
+
+
+
+
+            t2.speak("You have entered a number",TextToSpeech.QUEUE_FLUSH,null);
             if (!touchevent){
                 mvibrator.cancel();
                 Log.d("PW", String.valueOf(count));

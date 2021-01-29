@@ -79,6 +79,8 @@ public class enterPWtutorial extends AppCompatActivity {
         continue_trial = (Button) findViewById(R.id.continue_button);
         trialTV = (TextView) findViewById(R.id.tvtrial);
         trialTV.setText("Trial " + String.valueOf(trial) + "/3 ");
+
+
         duration_tv = (TextView) findViewById(R.id.duration);
         interval_tv = (TextView) findViewById(R.id.interval);
         duration_tv.setText("Vibration Duration: " + String.valueOf(duration) + "/100");
@@ -86,6 +88,8 @@ public class enterPWtutorial extends AppCompatActivity {
         change = (Button) findViewById(R.id.change_button);
         builder = new AlertDialog.Builder(this);
         change.setEnabled(false);
+
+
         t2 = new TextToSpeech(this, new TextToSpeech.OnInitListener() {
             @Override
             public void onInit(int status) {
@@ -104,6 +108,37 @@ public class enterPWtutorial extends AppCompatActivity {
         });
 
 
+
+        testPWtv.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                t2.speak("Please ENter the pin"+String.format("%04d",evalPW),TextToSpeech.QUEUE_FLUSH,null);
+                return true;
+            }
+        });
+        duration_tv.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                t2.speak("Vibration Duration"+duration+"/100",TextToSpeech.QUEUE_FLUSH,null);
+                return false;
+            }
+        });
+        interval_tv.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                t2.speak("Vibration Interval"+interval+"/400",TextToSpeech.QUEUE_FLUSH,null);
+                return false;
+            }
+        });
+pwTV.setOnTouchListener(new View.OnTouchListener() {
+    @Override
+    public boolean onTouch(View v, MotionEvent event) {
+        t2.speak("Enter the PIN",TextToSpeech.QUEUE_FLUSH,null);
+        return false;
+    }
+});
+
+
         //conditionTV=(TextView) findViewById(R.id.tvcondition);
 
         generateEvaluationPassword();
@@ -120,51 +155,16 @@ public class enterPWtutorial extends AppCompatActivity {
 
 
     private void generateEvaluationPassword() {
+
         evalPW = r.nextInt(9999);
         testPWtv.setText("Please Enter the PIN: " + String.format("%04d", evalPW));
-        //t2.speak(String.format("%04d", evalPW),TextToSpeech.QUEUE_ADD,null);
+        //t2.speak("Required PIN"+evalPW+"Entered PiN"+pw,TextToSpeech.QUEUE_FLUSH,null);
+
+       // t2.speak("Please Enter the PIN"+String.valueOf(evalPW),TextToSpeech.QUEUE_ADD,null);
     }
 
 
-//    public void processPress(MotionEvent e, int tv) {
-//        if(e.getAction() == MotionEvent.ACTION_UP){
-//            Log.e("Touch button",String.valueOf(tv));
-//            //vibrate(numberPad[tv]);
-//        }
-//        if(e.getAction() == MotionEvent.ACTION_DOWN){
-//            Log.e("remove finger",String.valueOf(tv));
-//            mvibrator.cancel();
-//            //SystemClock.sleep(1000);
-//
-//        }
-//        if(e.getAction() == MotionEvent.ACTION_HOVER_ENTER){
-//            Log.e("HoverEnter",String.valueOf(tv));
-//            mvibrator.cancel();
-//            //SystemClock.sleep(1000);
-//
-//        }
-//        if(e.getAction() == MotionEvent.ACTION_MOVE){
-//            Log.e("Moving",String.valueOf(tv));
-//            mvibrator.cancel();
-//            //SystemClock.sleep(1000);
-//
-//        }
-//        if(e.getAction() == MotionEvent.ACTION_HOVER_MOVE){
-//            Log.e("HoverMoving",String.valueOf(tv));
-//            mvibrator.cancel();
-//            SystemClock.sleep(1000);
-//
-//        }
-//        if(e.getAction() == MotionEvent.ACTION_HOVER_EXIT){
-//            Log.e("HoverExit",String.valueOf(tv));
-//            mvibrator.cancel();
-//            //SystemClock.sleep(1000);
-//
-//        }
-//        //long presses the button and it would vibrate according to morse
-//        //short press would enter the password!
-//
-//    }
+
 
     public void processTVPress(final TextView t, final int t1) {
         t.setOnTouchListener(new View.OnTouchListener() {
@@ -198,11 +198,13 @@ public class enterPWtutorial extends AppCompatActivity {
                                 pw = pw.substring(0, pw.length() - 1);
                             }
                             pwTV.setText(pw);
+                            t2.speak("Delete button!",TextToSpeech.QUEUE_FLUSH,null);
                         }
                         if (t1 == 2) {
 
                             pw = "";
                             pwTV.setText(pw);
+                            t2.speak("Clear button!",TextToSpeech.QUEUE_FLUSH,null);
                         }
 //                        if (t1==3){
 //                            //HAMorseCommon.writeAnswerToFile(getApplicationContext(),"fromTouchMorse");
@@ -232,32 +234,41 @@ public class enterPWtutorial extends AppCompatActivity {
         continue_trial.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 if (pw.equals(String.format("%04d", evalPW))) {
                     Log.e("Eval", String.valueOf(evalPW) + " CORRECT " + pw);
                     builder.setMessage("You have entered the right answer!").setTitle("PIN entry");
                     //return false;
+                    t2.speak("You have entered the right PIN code!",TextToSpeech.QUEUE_FLUSH,null);
                 } else {
                     Log.e("Eval", String.valueOf(evalPW) + " INCORRECT " + pw);
                     builder.setMessage("You have entered the wrong answer!").setTitle("PIN entry");
+                    t2.speak("You have entered the right PIN code!",TextToSpeech.QUEUE_FLUSH,null);
 
                 }
+                t2.speak("Continue",TextToSpeech.QUEUE_FLUSH,null);
                 Log.e("Answers", "Empty Text lah");
                 builder.setMessage("Required PIN: " + String.format("%04d", evalPW) + "\nPIN you entered: " + pw)
 
                         .setPositiveButton("Okay!", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
+
+
                                 generateEvaluationPassword();
                                 pw = "";
                                 pwTV.setText(pw);
                                 //shifts=0;
+                                //trial == 1 ? t2.speak("fd",TextToSpeech.QUEUE_FLUSH,null) : ;;]
                                 trial++;
 
                                 if (trial >= 4) {
                                     //HAMorseCommon.user = username;
                                     addToBundleAndOpenActivity(HAMainScreen.class);
 
+
                                 }
                                 updateTV();
+
                                 startTime = Calendar.getInstance().getTimeInMillis();
                                 //finish();
 //                                Toast.makeText(getApplicationContext(), "you choose yes action for alertbox",
@@ -268,28 +279,15 @@ public class enterPWtutorial extends AppCompatActivity {
                 //Setting the title manually
                 alert.setTitle("PIN information");
                 alert.show();
+                fileWriteString = "practice PIN," + String.valueOf(evalPW) + "," + trial + "," + String.valueOf(startTime) + "," + String.valueOf(Calendar.getInstance().getTimeInMillis()) + "Required PIN," + String.format("%04d", evalPW) + "Entered PIN," + pw + "Date:," + HAMorseCommon.dateTime() + "\n";
+                HAMorseCommon.writeAnswerToFile(getApplicationContext(), fileWriteString);
 
 
 
             }
         });
 
-//                                Toast toast1 = Toast.makeText(getApplicationContext(), "Required PIN: " + String.format("%04d", evalPW) + "\nPIN you entered: " + pw, Toast.LENGTH_SHORT);
-//                                toast1.show();
-        fileWriteString = "result," + String.valueOf(evalPW) + "," + trial + "," + String.valueOf(startTime) + "," + String.valueOf(Calendar.getInstance().getTimeInMillis()) + "," + String.format("%04d", evalPW) + "," + pw + "," + HAMorseCommon.dateTime() + "\n";
-        HAMorseCommon.writeAnswerToFile(getApplicationContext(), fileWriteString);
-//        generateEvaluationPassword();
-//        pw = "";
-//        pwTV.setText(pw);
-//        //shifts=0;
-//        trial++;
-//
-//        if (trial >= 4) {
-//            //HAMorseCommon.user = username;
-//            addToBundleAndOpenActivity(dairystudy.class);
-//        }
-//        updateTV();
-//        startTime = Calendar.getInstance().getTimeInMillis();
+
 
 
     }
@@ -314,35 +312,42 @@ public class enterPWtutorial extends AppCompatActivity {
             user = bundle.getString("userName");
             duration = bundle.getInt("duration");
             interval = bundle.getInt("interval");
+
+
         }
     }
 
     private void updateTV() {
-        trialTV.setText("Trial " + String.valueOf(trial) + "/3 ");
+
+        if(trial < 4){
+            t2.speak("Trial "+String.valueOf(trial)+"/3",TextToSpeech.QUEUE_FLUSH,null);
+        }
+
+
+
+
+       trialTV.setText("Trial " + String.valueOf(trial) + "/3 ");
+       // t2.speak("Trial "+String.valueOf(trial)+"/3",TextToSpeech.QUEUE_FLUSH,null);
 
         Log.e("trial:" + String.valueOf(trial), String.valueOf(trial));
 
     }
 
-//                            void sendEmail() {
-//                                getIntent().addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-//                                getIntent().addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
-//                                HAMorseCommon.sendEmail(this);
-//                            }
+
 
     class TouchVibe implements Runnable {
         @Override
         public void run() {
             down = System.currentTimeMillis();
             while (touchevent) {
-                if (Math.abs(down - System.currentTimeMillis()) > 310) {
+                if (Math.abs(down - System.currentTimeMillis()) > interval) {
                     Log.d("TAG", "Thread");
                     down = System.currentTimeMillis();
-                    long[] pattern = new long[]{0, duration, interval};
-                    Log.e("Hi I am vibration:" + interval + duration, String.valueOf(pattern));
+                    //long[] pattern = new long[]{0, duration, interval};
+                    //Log.e("Hi I am vibration:" + interval + duration, String.valueOf(pattern));
 
 
-                    mvibrator.vibrate(pattern, -1);
+                    mvibrator.vibrate(duration);
 
                     count++;
 
@@ -351,7 +356,7 @@ public class enterPWtutorial extends AppCompatActivity {
                     }
                 }
             }
-//            t2.speak(String.valueOf(count),TextToSpeech.QUEUE_FLUSH,null);
+            t2.speak("You have entered"+count,TextToSpeech.QUEUE_FLUSH,null);
             if (!touchevent) {
                 mvibrator.cancel();
                 Log.d("PW", String.valueOf(count));

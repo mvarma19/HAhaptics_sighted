@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/gradient_3"
+    android:background="#ebbbaa"
     tools:context=".HAMainScreen">
 
 
@@ -33,7 +33,7 @@
 
 
         android:layout_marginTop="28dp"
-        android:background="@drawable/gradient_2"
+        android:background="@drawable/gradient_1"
         android:fontFamily="@font/oswald"
         android:text="Perform ESM Studies "
         android:textSize="24dp"
@@ -48,7 +48,7 @@
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:layout_marginTop="40dp"
-        android:background="@drawable/gradient_2"
+        android:background="@drawable/gradient_1"
         android:fontFamily="@font/oswald"
 
 
@@ -67,11 +67,13 @@
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:layout_marginTop="28dp"
-        android:background="@drawable/gradient_2"
+        android:background="@drawable/gradient_1"
         android:fontFamily="@font/oswald"
 
         android:text="SETTINGS"
         android:textSize="24dp"
+
+
         app:layout_constraintEnd_toStartOf="@+id/guideline38"
         app:layout_constraintStart_toStartOf="@+id/guideline36"
         app:layout_constraintTop_toTopOf="@+id/guideline35" />
@@ -84,7 +86,7 @@
         android:layout_centerVertical="true"
 
         android:layout_marginTop="28dp"
-        android:background="@drawable/gradient_2"
+        android:background="@drawable/gradient_1"
         android:fontFamily="@font/oswald"
         android:text="Information about ESM studies"
         android:textSize="23dp"
@@ -100,15 +102,18 @@
         android:layout_centerVertical="true"
 
         android:layout_marginTop="28dp"
-        android:background="@drawable/gradient_2"
+        android:background="@drawable/gradient_1"
         android:fontFamily="@font/oswald"
         android:text="practice"
         android:textSize="23dp"
+
         app:layout_constraintEnd_toStartOf="@+id/guideline38"
         app:layout_constraintStart_toStartOf="@+id/guideline36"
         app:layout_constraintTop_toBottomOf="@+id/buttonMainTutorial2" />
 
     <EditText
+
+
         android:id="@+id/uname2"
 
         android:layout_width="411dp"
@@ -116,10 +121,13 @@
         android:backgroundTint="@android:color/background_dark"
         android:gravity="center"
         android:hint="Please enter your code"
+        android:fontFamily="@font/oswald"
         android:inputType="number"
         android:textColor="#ffffff"
         android:textColorHint="@color/cardview_dark_background"
         android:textSize="30dp"
+        android:layout_marginLeft="48dp"
+        android:layout_marginRight="48dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvParticipant2"
@@ -134,6 +142,7 @@
         android:text="Participant Code:"
         android:textSize="24dp"
         android:textStyle="bold"
+        android:textColor="#000000"
         app:layout_constraintBottom_toTopOf="@+id/guideline1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline0" />
