@@ -99,7 +99,7 @@ public class HABlindTutorial extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 addToBundleAndOpenActivity(HAMainScreen.class);
-                t2.speak("Continue button",TextToSpeech.QUEUE_FLUSH,null);
+
                 //startActivityForResult(intent,1);
             }
         });
@@ -107,22 +107,7 @@ public class HABlindTutorial extends AppCompatActivity {
 
 
 
-        t2 = new TextToSpeech(this, new TextToSpeech.OnInitListener() {
-            @Override
-            public void onInit(int status) {
-                if (status == TextToSpeech.SUCCESS) {
-                    int result = t2.setLanguage(Locale.US);
-                    if (result == TextToSpeech.LANG_MISSING_DATA
-                            || result == TextToSpeech.LANG_NOT_SUPPORTED) {
-                        Log.e("TTS", "Language not supported");
-                    } else {
-                        //mButtonSpeak.setEnabled(true);
-                    }
-                } else {
-                    Log.e("Text to Speech", "Initialization failed");
-                }
-            }
-        });
+
         seekBar_vinterval.setProgress(mPreferences.getInt(Key_PROGRESS_2,0));
         seekBar_vinterval.getProgress();
 
@@ -151,11 +136,11 @@ public class HABlindTutorial extends AppCompatActivity {
                 tv_vduration.setText("Vibration Duration:" + seekBar.getProgress() + "/" + seekBar.getMax());
                 progress = ((int) Math.round(progress / yourStep)) * yourStep;
                 seekBar.setProgress(progress);
-                //Toast.makeText(getApplicationContext(), valueOf(progress), Toast.LENGTH_SHORT).show();
+
 
                 duration=seekBar_vduration.getProgress();
                 tv_vduration.setText("Vibration Duration:" + seekBar_vduration.getProgress() + "/" + seekBar_vduration.getMax());
-                t2.speak("Vibration Duration Changed to:"+String.valueOf(duration),TextToSpeech.QUEUE_FLUSH,null);
+
 
             }
 
@@ -198,7 +183,6 @@ public class HABlindTutorial extends AppCompatActivity {
                 interval=seekBar_vinterval.getProgress();
 
 
-                t2.speak("Vibration Interval Changed to:"+String.valueOf(interval),TextToSpeech.QUEUE_FLUSH,null);
 
 
             }
@@ -228,23 +212,7 @@ public class HABlindTutorial extends AppCompatActivity {
 
 
 
-                t2 = new TextToSpeech(this, new TextToSpeech.OnInitListener() {
-                    @Override
-                    public void onInit(int status) {
-                        if (status == TextToSpeech.SUCCESS) {
-                            int result = t2.setLanguage(Locale.US);
-                            if (result == TextToSpeech.LANG_MISSING_DATA
-                                    || result == TextToSpeech.LANG_NOT_SUPPORTED) {
-                                Log.e("TTS", "Language not supported");
-                            } else {
 
-                            }
-                        } else {
-                            Log.e("Text to Speech", "Initialization failed");
-                        }
-
-                    }
-                });
 
 
         tv = (Button) findViewById(R.id.tvb);
@@ -253,7 +221,7 @@ public class HABlindTutorial extends AppCompatActivity {
         pwTV.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                t2.speak("Enter the PIN",TextToSpeech.QUEUE_FLUSH,null);
+
                 return false;
             }
         });
@@ -262,19 +230,18 @@ public class HABlindTutorial extends AppCompatActivity {
 
         clrTV = (TextView) findViewById(R.id.clr);
 
-        //enterTV = (TextView) findViewById(R.id.enter);
 
 
         processTVPress(tv, 0);
         processTVPress(hiddentextview, 1);
         processTVPress(clrTV, 2);
-        //processTVPress(enterTV, 3);
+
 
     }
 
     void addToBundleAndOpenActivity(Class cls) {
         Intent intent = new Intent(HABlindTutorial.this, cls);
-        //HAMorseCommon.user = user;
+
 
 
         Log.e("Duration", valueOf(duration));
@@ -397,22 +364,18 @@ public class HABlindTutorial extends AppCompatActivity {
                         Log.e("Tag", "I am here!!");
                         if (t1 == 0) {
                             touchevent = true;
-                             //t2.speak("Hold and Release To enter the PIN ",TextToSpeech.QUEUE_FLUSH,null);
+
 
 
                             new Thread(new TouchVibe()).start();
-                            //t2.speak(String.valueOf(pw),TextToSpeech.QUEUE_FLUSH,null);
+
 
                         }
 
-//                        store += t.getText();
-//                        input.setText(store);
+
                         break;
                     case MotionEvent.ACTION_MOVE:
-                        //Log.d("Tag","ACTION MOVE");
-                        //Log.d("Tag",String.valueOf("Move"));
 
-                        //isMoving = true;
                         break;
                     case MotionEvent.ACTION_UP:
                         Log.d("TAG", "ACTION_UP");
@@ -425,39 +388,21 @@ public class HABlindTutorial extends AppCompatActivity {
                                 pw = pw.substring(0, pw.length() - 1);
                             }
                             pwTV.setText(pw);
-                            t2.speak("Delete Button",TextToSpeech.QUEUE_FLUSH,null);
+
                         }
                         if (t1 == 2) {
 
                             pw = "";
                             pwTV.setText(pw);
-                            t2.speak("Clear button",TextToSpeech.QUEUE_FLUSH,null);
+
 
                         }
-                        //private GestureDetector gestureDetector=new GestureDetector(Test.this,)
-//                        if (t1 == 3) {
-//                            //HAMorseCommon.writeAnswerToFile(getApplicationContext(),"fromTouchMorse");
-//                            HAMorseCommon.sendEmail(HABlindTutorial.this);
-//                        }
-//                        long diff = System.currentTimeMillis() - down;
-//                        Log.d("time is",String.valueOf(diff));
-//                        long standard = 300L;
-//                        if(diff>standard)
-//                            break;
-//                        store += t.getText();
-//                        input.setText(store);
-//                        //enter.performClick();
-//                        //isMoving=false;
+
                         break;
                 }
 
                 return true;
-//                if (event.getAction() == MotionEvent.ACTION_DOWN) {
-//
-//                    store += t.getText();
-//                    input.setText(store);
-//                }
-                //return false;
+
             }
         });
     }
@@ -479,8 +424,8 @@ public class HABlindTutorial extends AppCompatActivity {
 
 
 
-                    //fileWriteString = "This is the first time user saves the vibration interval and duration!";
-                    fileWriteString = "Duration and Interval," + valueOf(duration) + ","  +   valueOf(interval) + "Time is:," + valueOf(Calendar.getInstance().getTimeInMillis())+",Date is"+ HAMorseCommon.dateTime() + "\n";
+
+                    fileWriteString = "Duration"+","+valueOf(duration)+","+"Interval"+"," + valueOf(interval) + ","  + "Time" +","+ valueOf(Calendar.getInstance().getTimeInMillis())+","+"Date"+","+ HAMorseCommon.dateTime() + "\n";
 
                     HAMorseCommon.writeAnswerToFile(getApplicationContext(), fileWriteString);
                     mvibrator.vibrate(seekBar_vduration.getProgress());
@@ -492,8 +437,7 @@ public class HABlindTutorial extends AppCompatActivity {
                     }
                 }
             }
-            t2.speak("You have entered"+count,TextToSpeech.QUEUE_FLUSH,null);
-           // t2.speak("Now vibrating",TextToSpeech.QUEUE_FLUSH,null);
+
 
 
                 if (!touchevent) {

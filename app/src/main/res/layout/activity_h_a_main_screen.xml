@@ -56,9 +56,9 @@
         android:textSize="24dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/guideline38"
-        app:layout_constraintHorizontal_bias="0.576"
         app:layout_constraintStart_toStartOf="@+id/guideline36"
-        app:layout_constraintTop_toBottomOf="@+id/buttonMainLoginScreen2" />
+        app:layout_constraintTop_toBottomOf="@+id/buttonMainLoginScreen2"
+        app:layout_constraintVertical_bias="0.0" />
 
     <Button
         android:id="@+id/buttonMainTutorial2"
@@ -116,44 +116,68 @@
 
         android:id="@+id/uname2"
 
-        android:layout_width="411dp"
-        android:layout_height="71dp"
+        android:layout_width="352dp"
+        android:layout_height="64dp"
         android:backgroundTint="@android:color/background_dark"
+        android:fontFamily="@font/oswald"
         android:gravity="center"
         android:hint="Please enter your code"
-        android:fontFamily="@font/oswald"
         android:inputType="number"
         android:textColor="#ffffff"
         android:textColorHint="@color/cardview_dark_background"
         android:textSize="30dp"
-        android:layout_marginLeft="48dp"
-        android:layout_marginRight="48dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/guideline35"
+        app:layout_constraintEnd_toStartOf="@+id/guideline38"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/guideline36"
         app:layout_constraintTop_toBottomOf="@+id/tvParticipant2"
+        app:layout_constraintVertical_bias="0.853"
         tools:text="" />
 
     <TextView
-        android:accessibilityLiveRegion="polite"
         android:id="@+id/tvParticipant2"
-        android:layout_width="410dp"
+        android:layout_width="354dp"
         android:layout_height="79dp"
+        android:layout_marginBottom="76dp"
+        android:accessibilityLiveRegion="polite"
         android:fontFamily="@font/bold"
         android:gravity="center"
+        android:importantForAccessibility="yes"
         android:text="Participant Code:"
+        android:textColor="#000000"
         android:textSize="24dp"
         android:textStyle="bold"
-        android:textColor="#000000"
-        app:layout_constraintBottom_toTopOf="@+id/guideline1"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/guideline35"
+        app:layout_constraintEnd_toStartOf="@+id/guideline38"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/guideline36"
         app:layout_constraintTop_toTopOf="@+id/guideline0" />
+
+    <TextView
+        android:id="@+id/welcome"
+        android:layout_width="355dp"
+        android:layout_height="54dp"
+        android:accessibilityLiveRegion="polite"
+        android:fontFamily="@font/bold"
+        android:gravity="center"
+        android:importantForAccessibility="yes"
+        android:text="Welcome to the homepage"
+        android:textColor="#000000"
+        android:textSize="24dp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/tvParticipant2"
+        app:layout_constraintEnd_toStartOf="@+id/guideline38"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/guideline36"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline35"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_begin="164dp" />
+        app:layout_constraintGuide_begin="213dp" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline36"

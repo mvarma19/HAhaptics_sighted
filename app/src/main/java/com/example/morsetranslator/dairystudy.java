@@ -92,64 +92,10 @@ public class dairystudy extends AppCompatActivity {
         change=(Button)findViewById(R.id.change_button);
         builder = new AlertDialog.Builder(this);
         change.setEnabled(false);
-        t2 = new TextToSpeech(this, new TextToSpeech.OnInitListener() {
-            @Override
-            public void onInit(int status) {
-                if (status == TextToSpeech.SUCCESS) {
-                    int result = t2.setLanguage(Locale.US);
-                    if (result == TextToSpeech.LANG_MISSING_DATA
-                            || result == TextToSpeech.LANG_NOT_SUPPORTED) {
-                        Log.e("TTS", "Language not supported");
-                    } else {
-                        //mButtonSpeak.setEnabled(true);
-                    }
-                } else {
-                    Log.e("Text to Speech", "Initialization failed");
-                }
-            }
-        });
 
 
 
 
-
-diary.setOnTouchListener(new View.OnTouchListener() {
-    @Override
-    public boolean onTouch(View v, MotionEvent event) {
-        t2.speak("Welcome to ESM studies",TextToSpeech.QUEUE_FLUSH,null);
-        return false;
-    }
-});
-duration_tv.setOnTouchListener(new View.OnTouchListener() {
-    @Override
-    public boolean onTouch(View v, MotionEvent event) {
-        t2.speak("Vibration Duration:"+String.valueOf(duration)+"/100",TextToSpeech.QUEUE_FLUSH,null);
-
-        return false;
-    }
-});
-interval_tv.setOnTouchListener(new View.OnTouchListener() {
-    @Override
-    public boolean onTouch(View v, MotionEvent event) {
-        t2.speak("Vibration Interval: "+String.valueOf(interval)+"/400",TextToSpeech.QUEUE_FLUSH,null);
-
-        return false;
-    }
-});
-        testPWtv.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                t2.speak("Please ENter the pin"+String.format("%04d",evalPW),TextToSpeech.QUEUE_FLUSH,null);
-                return true;
-            }
-        });
-        pwTV.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                t2.speak("Enter the PIN",TextToSpeech.QUEUE_FLUSH,null);
-                return false;
-            }
-        });
 
 
         generateEvaluationPassword();
@@ -296,11 +242,10 @@ interval_tv.setOnTouchListener(new View.OnTouchListener() {
                 alert.show();
 
 
-                fileWriteString="Selected vibration and Interval is:"+interval+","+duration;
 
 
 
-                fileWriteString = "Result of," +trial+","+expCondition+ "is:Required PIN" + String.valueOf(evalPW) +"Start time was:"+ String.valueOf(startTime) + "Calender date and time:," + String.valueOf(Calendar.getInstance().getTimeInMillis()) + "Required PIN," + String.format("%04d", evalPW) + "Entered PIN," + pw + "Date:," + HAMorseCommon.dateTime() + "\n";
+                fileWriteString = "Result of trial no"+"," +trial+","+"Condition number"+","+expCondition+","+ "Required PIN" +","+ String.valueOf(evalPW) +","+"Start time was:"+","+ String.valueOf(startTime) +","+ "Calender date and time:" +","+ String.valueOf(Calendar.getInstance().getTimeInMillis()) +","+ "Required PIN"+","+ String.format("%04d", evalPW) +","+ "Entered PIN"+"," + pw +","+ "Date:" +","+ HAMorseCommon.dateTime() + "\n";
                 HAMorseCommon.writeAnswerToFile(getApplicationContext(), fileWriteString);
 
 
@@ -393,7 +338,7 @@ interval_tv.setOnTouchListener(new View.OnTouchListener() {
 
 
 
-            t2.speak("You have entered a number",TextToSpeech.QUEUE_FLUSH,null);
+
             if (!touchevent){
                 mvibrator.cancel();
                 Log.d("PW", String.valueOf(count));

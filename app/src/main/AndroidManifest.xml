@@ -20,7 +20,7 @@
     <application
         android:allowBackup="true"
         android:icon="@drawable/morse_code"
-        android:label="@string/app_name"
+        android:label="Haptic Authentication"
         android:theme="@style/AppTheme">
 
         <activity android:name=".Survey" />
@@ -33,11 +33,14 @@
 
         <activity android:name=".HABlindTutorial"/>
         <activity android:name=".enterPWtutorial"/>
+        <activity android:name=".HAMainScreen"/>
+        <activity android:name=".Settingsverification"/>
+
 
 
         <activity
-            android:name=".HAMainScreen"
-            android:label="@string/app_name">
+            android:name=".homepage"
+            android:label="Haptic Authentication">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
